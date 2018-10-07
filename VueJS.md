@@ -84,7 +84,7 @@ https://cli.vuejs.org/guide
     git rebase -i HEAD~2
       // 2번째 줄 pick을 fixup으로 바꾸고 저장
 
-## VSCode 확장 Git History 설치
+**VSCode 확장 Git History 설치**
 
 ## Sass 설치
 css를 프로그램화 하여 색상 테마를 변수에 넣을 수 있고, 반복 부분을 저장하고 불러 올 수 있다. 이름은 Sass지만 파일명은 scss이다.
@@ -141,6 +141,7 @@ src/App.vue
     </template>
 
 src/assets/styles/App.scss
+
     // common
     .pointer {
       cursor: pointer;
@@ -295,7 +296,7 @@ src/components/container/Nav.vue
       <li><h2><router-link :to="{name: 'CRUD'}">CRUD</router-link></h2></li>
       <li><h2><router-link :to="{path: '/search'}">Search</router-link></h2></li>
 
-**여기 까지가 Markup 개발자 분들이 할일**
+**여기 까지가 Markup 개발자 분들이 할일 입니다.**
 
 ## CRUD Conpenent Markup
 src/components/container/contents/CRUD.vue
@@ -394,7 +395,7 @@ src/main.js
     store,
 
 ## error: Unexpected console statement (no-console) 해결
-테미널
+터미널
 
     vue add @vue/eslint
     Error prevention only > Lint on save
