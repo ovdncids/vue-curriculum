@@ -1,6 +1,6 @@
 # 풀스텍 커리큘럼
 
-**Frontend**: Vue.js
+**Frontend**: [Vue.js](./VueJS.md)
 
 **Backend**: Node.js
 
