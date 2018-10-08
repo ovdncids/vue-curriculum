@@ -434,6 +434,8 @@ src/components/container/contents/CRUD.vue
       }
     }
 
+**computed, methods 차이 설명**
+
 **debugger 설명**
 
     debugger
@@ -792,6 +794,21 @@ src/components/container/contents/Search.vue
 
 ## Search Conpenent 파라미터 변경과 새로고침 적용
 src/components/container/contents/Search.vue
+
+    // export default {
+    watch: {
+      '$route.query': function (query, beforeQuery) {
+        console.log(query, beforeQuery)
+        this.member.name = query.name || ''
+        this.$store.dispatch(types.SEARCH_READ)
+      }
+    },
+
+    // read() {
+    this.$router.push({ name: 'search', query: { name: this.member.name }})
+
+    // created() {
+    this.member.name = this.$route.query.name || ''
 
 ## Proxy 설정
 
