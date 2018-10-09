@@ -246,12 +246,25 @@ src/App.vue
 
  src/components/Footer.vue
 
-    <footer>{{title}}</footer>
+    <div @click="toggleShow()">
+      <footer>{{title}} <span v-if="isShow">by</span></footer>
+    </div>
 
-    // export default {
-    props: {
-      title: {
-        default: 'Rightcopy'
+    export default {
+      data() {
+        return {
+          isShow: true
+        }
+      },
+      props: {
+        title: {
+          default: 'Rightcopy'
+        }
+      },
+      methods: {
+        toggleShow() {
+          this.isShow = !this.isShow
+        }
       }
     }
 
