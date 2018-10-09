@@ -1,6 +1,6 @@
 # Vue.js
 
-## NVM
+## NVM (Node Version Manager)
 Node.js 설치 버전을 관리하는 프로그램. 심볼릭 링크를 이용하여 Node.js 버전을 그때 그때 변경한다.
 Node.js 버전 별로 자유롭게 설치, 이동, 삭제 가능하다. 현재는 Node.js v6, v8이 주류를 이룬다.
 
@@ -17,22 +17,21 @@ Node.js 버전 별로 자유롭게 설치, 이동, 삭제 가능하다. 현재�
 https://nodejs.org
 
     nvm ls
-        // 설치 된 node.js 리스트를 본다.
+      // 설치 된 node.js 리스트를 본다.
     nvm install 8.12.0
-        // 해당 버전을 설치 한다.
+      // 해당 버전을 설치 한다.
     nvm uninstall 8.12.0
-        // 해당 버전을 삭제 한다.
+      // 해당 버전을 삭제 한다.
     nvm use 8.12.0
-        // 해당 버전을 사용 한다.
+      // 해당 버전을 사용 한다.
 
-<!-- v6.14.4 -->
-
-## NPM
+## NPM (Node Package Manager)
     npm install -g npm
-        // 상위 버전으로 업 한다. 현재 v6.4.1
+      // 상위 버전으로 업 한다. 현재 v6.4.1
 
 ## Visual Studio Code
 **Tab 스페이스 2칸으로 설정**: Preferences > 검색 > editor.detectIndent
+
 https://stackoverflow.com/questions/29972396/how-to-set-tab-space-style
 
     "editor.detectIndentation": false
@@ -40,23 +39,30 @@ https://stackoverflow.com/questions/29972396/how-to-set-tab-space-style
 
 ## Vue CLI 3
 https://kr.vuejs.org/v2/guide/index.html
+
 https://cli.vuejs.org/guide
 
     // Vue CLI 3 설치
     npm install -g @vue/cli
-    npm install -g @vue/cli-service-global
 
     // Vue.js 프로젝트 생성
     vue create vue-study
-        // VSCode 해당 디렉토리 열기
+      // VSCode 해당 디렉토리 열기
+      // 생성이 안 될 경우
+      npm install -g @vue/cli-service-global
+
 
     // build
     npm run build
     npm install -g serve
-    serve -s build
+    serve -s dist
 
     // 프로젝트 실행
     npm run serve
+
+## 현재 문서 Git clone 하기
+
+git clone https://github.com/ovdncids/fullstack-curriculum-sangmo.git
 
 ## Git .gitignore
     # packege.json
@@ -630,9 +636,9 @@ src/shared/stores/modules/crudModule.js
         utils.toastr().warning('Please text your age and upper than 0.')
         return
       }
-      const spinner = utils.spinner().spin(spinnerTarget);
+      const spinner = utils.spinner().spin(spinnerTarget)
       axios.put('http://localhost:3100/api/v1/member', {key, member}).then(response => {
-        console.log(response);
+        console.log(response)
         spinner.stop()
         utils.toastr().success(response.data.result)
         fromComponent.$store.dispatch(types.CRUD_READ)
@@ -658,11 +664,11 @@ src/shared/stores/modules/crudModule.js
 
     [types.CRUD_DELETE] (commit, { spinnerTarget, fromComponent, key }) {
       if (!window.confirm('Are you sure?')) {
-        return;
+        return
       }
-      const spinner = utils.spinner().spin(spinnerTarget);
+      const spinner = utils.spinner().spin(spinnerTarget)
       axios.delete(`http://localhost:3100/api/v1/member/${key}`).then(response => {
-        console.log(response);
+        console.log(response)
         spinner.stop()
         utils.toastr().success(response.data.result)
         fromComponent.$store.dispatch(types.CRUD_READ)
@@ -782,7 +788,7 @@ src/components/container/contents/Search.vue
         },
         keyPress(e) {
           if (e.charCode === 13) {
-            this.read();
+            this.read()
           }
         }
       },
