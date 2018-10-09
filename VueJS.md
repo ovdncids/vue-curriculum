@@ -401,16 +401,17 @@ src/main.js
     store,
 
 ## error: Unexpected console statement (no-console) 해결
-터미널
-
-    vue add @vue/eslint
-    Error prevention only > Lint on save
-
 package.json
 
     "rules": {
       "no-console": "off"
     }
+
+안될 경우
+
+    vue add @vue/eslint
+    Error prevention only > Lint on save
+
 
 ## CRUD Conpenent Store inject
 src/components/container/contents/CRUD.vue
