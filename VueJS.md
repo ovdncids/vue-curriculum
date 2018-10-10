@@ -34,8 +34,10 @@ https://nodejs.org
 
 https://stackoverflow.com/questions/29972396/how-to-set-tab-space-style
 
-    "editor.detectIndentation": false
     "editor.tabSize": 2
+      // 기본 텝 사이즈를 2칸으로 변경한다.
+    "editor.detectIndentation": false
+      // 해당 파일의 텝 사이즈를 무시하고 기본 텝 사이즈로 설정한다.
 
 ## Vue CLI 3
 https://kr.vuejs.org/v2/guide/index.html
