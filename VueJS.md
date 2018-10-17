@@ -257,13 +257,13 @@ export default {
 ## Vue props, v-show, v-if
 src/App.vue
 ```html
-<!-- <Nav -->
+// <Nav
 v-show="true"
 
-<!-- <div class="contents" -->
+// <div class="contents"
 v-if="true"
 
-<!-- <Footer -->
+// <Footer
 :title="'Vue.js Study'"
 ```
 
@@ -320,7 +320,7 @@ src/App.vue
 // <Contents v-if="true"></Contents> 변경
 <router-view></router-view>
 
-// Contents 삭제, 파일도 삭제
+<!-- Contents 삭제, 파일도 삭제 -->
 ```
 
 src/components/container/contents/
