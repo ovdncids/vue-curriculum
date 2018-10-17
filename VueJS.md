@@ -551,7 +551,7 @@ export const spinner = () => {
 
 src/components/container/contents/CRUD.vue
 ```html
-    <button class="relative pointer" @click="create($event.target)">Create</button>
+<button class="relative pointer" @click="create($event.target)">Create</button>
 ```
 ```js
 create(spinnerTarget) {
