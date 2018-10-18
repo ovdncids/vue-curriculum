@@ -433,10 +433,6 @@ src/components/container/contents/CRUD.vue
 Component는 상하, 수직, 부모 자식 관계인데 Store는 수평, 평등 관계이다.
 
 **Vuex 설치**
-```sh
-npm install --save vuex
-```
-
 src/shared/stores/types.js
 ```js
 export const CRUD_CREATE = 'crud/CREATE'
@@ -466,6 +462,10 @@ export const crudModule = {
 
 **CRUD Store 등록하기**
 src/shared/stores/store.js
+```diff
+- src/store.js
++ src/shared/stores/store.js
+```
 ```js
 import Vue from 'vue'
 import Vuex from 'vuex'
@@ -473,7 +473,7 @@ import { crudModule } from './modules/crudModule'
 
 Vue.use(Vuex)
 
-export const store = new Vuex.Store({
+export default new Vuex.Store({
   modules: {
     crud: crudModule
   }
@@ -481,11 +481,9 @@ export const store = new Vuex.Store({
 ```
 
 src/main.js
-```js
-import { store } from './shared/stores/store'
-
-// new Vue({
-store,
+```diff
+- import store from './store'
++ import store from './shared/stores/store'
 ```
 
 ## error: Unexpected console statement (no-console) 해결
