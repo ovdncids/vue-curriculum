@@ -63,10 +63,23 @@ npm install -g @vue/cli
 
 # Vue.js 프로젝트 생성
 vue create vue-study
-  # VSCode 해당 디렉토리 열기
   # 생성이 안 될 경우
-  npm install -g @vue/cli-service-global
+    npm install -g @vue/cli-service-global
+  # 생성이 될 경우
+    # Manually select features 선택
+    # Babel, Router, Vuex, Linter / Formatter 선택
+      # Test 필요시 Unit Testing 선택
+    # Use history mode for router? Y 입력
+    # ESLint with error prevention only 선택
+    # Lint on save 선택
+    # Mocha + Chai, Jest
+      # Test를 선택 했을 경우 보여짐
+        # Jest가 더 빠르므로 Jest 선택
+    # In pacage.json 선택
+    # Save this as a preset for future projects? N 입력
+      # 현재 까지 선택 했던 사항을 별칭을 주어서 저장 할지 여부
 
+# VSCode 해당 디렉토리 열기
 # build
 npm run build
 npm install -g serve
@@ -82,18 +95,18 @@ git clone https://github.com/ovdncids/fullstack-curriculum-sangmo.git
 
 ## Git .gitignore
 ```sh
-# packege.json
+# npm or yarn
 package-lock.json
-yarn-lock.json
-## 가끔 이 파일 때문에 클라이언트와 서버 사이에 버전이 안 맞아서 오류가 발생한다.
-## 용량도 크고 npm install 할때 마다 생성되는 파일이니 .gitignore 목록에 넣는다.
+yarn.lock
 
 # .idea
 .idea
-## JetBrains 제품인 IntelliJ, WebStorm 설정 파일
 ```
 
-**package-lock.json 파일 삭제**
+**lock 파일**: 가끔 이 파일 때문에 클라이언트와 서버 사이에 버전이 안 맞아서 오류가 발생한다.
+용량도 크고 npm install 할때 마다 생성되는 파일이니 .gitignore 목록에 넣는다.
+
+**package-lock.json, yarn.lock 파일 삭제**
 
 **Git push**
 ```sh
@@ -108,7 +121,7 @@ git commit --amend -m ""
 **이전 commit과 합치기**
 ```sh
 git rebase -i HEAD~2
-# 2번째 줄 pick을 fixup으로 바꾸고 저장
+  # 2번째 줄 pick을 fixup으로 바꾸고 저장
 ```
 
 **VSCode 확장 Git History 설치**
@@ -121,7 +134,12 @@ https://sass-guidelin.es/ko/
 npm install -D sass-loader node-sass
 ```
 
-## 필요 없는 파일 지우기
+### 필요 없는 파일 지우기
+```
+src/assets/logo.png
+src/views
+src/components/HelloWorld.vue
+```
 
 src/App.vue
 ```html
@@ -129,16 +147,11 @@ src/App.vue
   <div id="app">
   </div>
 </template>
+```
 
-<script>
-export default {
-}
-</script>
-
-<style lang="scss">
-@import "~@/assets/styles/App.scss";
-
-</style>
+src/router.js
+```
+전부 주석 처리
 ```
 
 ## Markup
@@ -160,8 +173,10 @@ src/App.vue
       <hr />
       <div class="contents">
         <section>
-          <h3>CRUD</h3>
-          <p>Contents</p>
+          <div>
+            <h3>CRUD</h3>
+            <p>Contents</p>
+          </div>
         </section>
       </div>
       <hr />
@@ -169,10 +184,23 @@ src/App.vue
     <footer>Copyright</footer>
   </div>
 </template>
+
+<script>
+export default {
+}
+</script>
+
+<style lang="scss">
+@import "~@/assets/styles/App.scss";
+</style>
 ```
 
 src/assets/styles/App.scss
 ```scss
+body {
+  margin: 0;
+}
+
 // common
 .pointer {
   cursor: pointer;
@@ -254,6 +282,19 @@ export default {
 }
 ```
 
+기본 vue 파일
+```html
+<template>
+  <div>
+  </div>
+</template>
+
+<script>
+export default {
+}
+</script>
+```
+
 ## Vue props, v-show, v-if
 src/App.vue
 ```html
@@ -264,7 +305,7 @@ v-show="true"
 v-if="true"
 
 // <Footer
-:title="'Vue.js Study'"
+:title="'Copyright'"
 ```
 
 src/components/Footer.vue
@@ -294,54 +335,53 @@ export default {
 ```
 
 ## Vue router
-**설치**
-```sh
-npm install --save vue-router
-```
-
-src/main.js
-```js
-import VueRouter from 'vue-router'
-import { routes } from './routes'
-
-Vue.use(VueRouter)
-
-const router = new VueRouter({
-  routes,
-  mode: 'history'
-})
-
-// new Vue({
-router,
-```
-
 src/App.vue
-```html
-// <Contents v-if="true"></Contents> 변경
-<router-view></router-view>
+```diff
+- <Contents></Contents>
++ <router-view></router-view>
 
-<!-- Contents 삭제, 파일도 삭제 -->
+- import Contents from './components/container/Contents'
+
+- Contents,
+
+<!-- Contents.vue 파일 삭제 -->
 ```
 
 src/components/container/contents/
-```
-CRUD.vue, Search.vue Component 파일 생성
+```diff
+- Contents.vue
++ contents/CRUD.vue
+
++ contents/Search.vue
 ```
 src/routes.js
-```js
-import CRUD from './components/container/contents/CRUD.vue'
-import Search from './components/container/contents/Search.vue'
+```diff
+- import Home from './views/Home.vue'
++ import CRUD from './components/container/contents/CRUD.vue'
 
-export const routes = [
-  { path: '/', redirect: '/CRUD' },
-  { path: '/CRUD', name:'CRUD', component: CRUD },
-  { path: '/search', name:'search', component: Search }
-]
++ { path: '/', redirect: '/crud' },
+
+- path: '',
+- name: 'home',
+- component: Home
++ path: '/crud',
++ name: 'crud',
++ component: CRUD
+
+- path: '/about',
+- name: 'about',
++ path: '/search',
++ name: 'search',
+
+- component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
++ // component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
++ component: () => import('./components/container/contents/Search.vue')
+
 ```
 
 src/components/container/Nav.vue
 ```html
-<li><h2><router-link :to="{name: 'CRUD'}">CRUD</router-link></h2></li>
+<li><h2><router-link :to="{name: 'crud'}">CRUD</router-link></h2></li>
 <li><h2><router-link :to="{path: '/search'}">Search</router-link></h2></li>
 ```
 
