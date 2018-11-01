@@ -77,6 +77,7 @@ vue create vue-study
     # Mocha + Chai, Jest
       # Test를 선택 했을 경우 보여짐
         # Jest가 더 빠르므로 Jest 선택
+          # --watchAll
     # In pacage.json 선택
     # Save this as a preset for future projects? N 입력
       # 현재 까지 선택 했던 사항을 별칭을 주어서 저장 할지 여부
