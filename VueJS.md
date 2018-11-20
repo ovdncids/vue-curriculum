@@ -38,7 +38,7 @@ nvm use 8.12.0
 npm install -g npm
 ```
 
-## Visual Studio Code
+<!-- ## Visual Studio Code
 **Tab 스페이스 2칸으로 설정**: Preferences > 검색 > editor.detectIndent
 
 https://stackoverflow.com/questions/29972396/how-to-set-tab-space-style
@@ -51,7 +51,7 @@ https://stackoverflow.com/questions/29972396/how-to-set-tab-space-style
 해당 파일의 텝 사이즈를 무시하고 기본 텝 사이즈로 설정한다.
 ```json
 "editor.detectIndentation": false
-```
+``` -->
 
 ## Vue CLI 3
 https://kr.vuejs.org/v2/guide/index.html
@@ -69,9 +69,10 @@ vue create vue-study
     npm install -g @vue/cli-service-global
   # 생성이 될 경우
     # Manually select features 선택
-    # Babel, Router, Vuex, Linter / Formatter 선택
+    # Babel, Router, Vuex, CSS Pre-processors, Linter / Formatter 선택
       # Test 필요시 Unit Testing 선택
     # Use history mode for router? Y 입력
+    # Pick a CSS Pre-processor: Sass/SCSS 선택
     # ESLint with error prevention only 선택
     # Lint on save 선택
     # Mocha + Chai, Jest
