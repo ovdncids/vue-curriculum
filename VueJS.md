@@ -73,7 +73,7 @@ vue create vue-study
       # Test 필요시 Unit Testing 선택
     # Use history mode for router? Y 입력
     # Pick a CSS Pre-processor: Sass/SCSS 선택
-    # ESLint + Standard config 선택
+    # ESLint with error prevention only 선택
     # Lint on save 선택
     # Mocha + Chai, Jest
       # Test를 선택 했을 경우 보여짐
@@ -500,13 +500,13 @@ src/main.js
 + import store from './shared/stores/store'
 ```
 
-<!-- ## error: Unexpected console statement (no-console) 해결
+## error: Unexpected console statement (no-console) 해결
 package.json
 ```json
 "rules": {
   "no-console": "off"
 }
-``` -->
+```
 
 안될 경우
 ```sh
