@@ -312,7 +312,7 @@ src/App.vue
 ```js
 import Header from './components/Header.vue'
 import Nav from './components/container/Nav.vue'
-import Contents from './components/container/Contents'
+import Contents from './components/container/Contents.vue'
 import Footer from './components/Footer.vue'
 
 export default {
@@ -383,7 +383,7 @@ src/App.vue
 - <Contents></Contents>
 + <router-view></router-view>
 
-- import Contents from './components/container/Contents'
+- import Contents from './components/container/Contents.vue'
 
 - Contents,
 
