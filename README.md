@@ -113,6 +113,8 @@ vue create vue-study
       # 현재 까지 선택 했던 사항을 별칭을 주어서 저장 할지 여부
 
 # VSCode 해당 디렉토리 열기
+# test
+npm run test:unit
 # build
 npm run build
 npm install -g serve
@@ -124,7 +126,7 @@ npm run serve
 
 ## 현재 문서 Git clone 하기
 
-git clone https://github.com/ovdncids/fullstack-curriculum-sangmo.git
+git clone https://github.com/ovdncids/vue-curriculum.git
 
 ## Git .gitignore
 ```sh
