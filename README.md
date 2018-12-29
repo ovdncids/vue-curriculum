@@ -490,6 +490,7 @@ src/components/container/contents/CRUD.vue
 Component는 상하, 수직, 부모 자식 관계인데 Store는 수평, 평등 관계이다.
 
 **Vuex 설치**
+
 src/shared/stores/types.js
 ```js
 export const CRUD_CREATE = 'crud/CREATE'
@@ -509,7 +510,7 @@ export const crudModule = {
   mutations: {
   },
   actions: {
-    [types.CRUD_CREATE] ({ commit }) {
+    [types.CRUD_CREATE] (commit) {
       console.log(types.CRUD_CREATE)
       console.log(crudModule.state.member)
     }
