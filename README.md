@@ -658,7 +658,7 @@ create(spinnerTarget) {
 src/shared/stores/modules/crudModule.js
 ```js
 // [types.CRUD_CREATE] () {
-[types.CRUD_CREATE] (commit, { spinnerTarget }) {
+[types.CRUD_CREATE] (commit, { spinnerTarget, fromComponent }) {
   utils.spinner().spin(spinnerTarget)
 ```
 
