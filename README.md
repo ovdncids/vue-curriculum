@@ -754,7 +754,7 @@ src/components/container/contents/CRUD.vue
 <tr v-for="(member, key) in members" :key="key">
   <td>{{member.name}}</td>
   <td>{{member.age}}</td>
-  <td>{{moment(member.createdDate).format('YYYY-MM-DD')}}</td>
+  <td>{{moment(member.createdDate).format('YYYY-MM-DD HH:mm')}}</td>
 ```
 ```js
 import moment from 'moment'
@@ -942,7 +942,7 @@ src/components/container/contents/Search.vue
 <tr v-for="(member, key) in members" :key="key">
   <td>{{member.name}}</td>
   <td>{{member.age}}</td>
-  <td>{{moment(member.createdDate).format('YYYY-MM-DD')}}</td>
+  <td>{{moment(member.createdDate).format('YYYY-MM-DD HH:mm')}}</td>
 </tr>
 ```
 ```js
