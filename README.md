@@ -108,6 +108,9 @@ vue create vue-study
       # Test를 선택 했을 경우 보여짐
         # Jest가 더 빠르므로 Jest 선택
           # --watchAll
+            # watch 모드
+          # --verbose=false
+            # console.log 사용 가능
     # In pacage.json 선택
     # Save this as a preset for future projects? N 입력
       # 현재 까지 선택 했던 사항을 별칭을 주어서 저장 할지 여부
