@@ -620,7 +620,7 @@ Toastr.options.hideDuration = 200
 
 src/shared/stores/modules/crudModule.js
 ```js
-import * as utils from '../utils'
+import * as utils from '../../utils'
 
 // [types.CRUD_CREATE] () {
 // validation
@@ -914,7 +914,7 @@ export const searchModule = {
   actions: {
     [types.SEARCH_READ] ({ commit }) {
       utils.nProgress.start()
-      axios.get('http://localhost:3100/api/v1/member').then(response => {
+      axios.get(`http://localhost:3100/api/v1/search?name=${searchModule.state.member.name}`).then(response => {
         console.log(response)
         commit(types.SEARCH_READ, response.data.members)
         utils.nProgress.done()
@@ -1006,6 +1006,22 @@ package.json
 "vue": {
   "devServer": {
     "proxy": "http://localhost:3100"
+  }
+}
+```
+
+For CLI3: vue.config.js
+```js
+'use strict'
+
+module.exports = {
+devServer: {
+  proxy: { // proxyTable 설정
+    '/api': {
+      target: 'http://localhost:3100',
+        changeOrigin: true
+      }
+    }
   }
 }
 ```
