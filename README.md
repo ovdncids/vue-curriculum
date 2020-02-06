@@ -1016,7 +1016,7 @@ For CLI3: vue.config.js
 
 module.exports = {
 devServer: {
-  proxy: { // proxyTable 설정
+  proxy: {
     '/api': {
       target: 'http://localhost:3100',
         changeOrigin: true
