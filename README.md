@@ -694,7 +694,7 @@ import axios from 'axios'
 
 // [types.CRUD_CREATE] (commit, { spinnerTarget, fromComponent }) {
 const spinner = utils.spinner().spin(spinnerTarget)
-axios.post('http://localhost:3100/api/v1/member', member).then(response => {
+axios.post('http://localhost:3100/api/v1/members', member).then(response => {
   console.log(response)
   spinner.stop()
   utils.toastr().success(response.data.result)
@@ -735,13 +735,13 @@ members: []
   state.members = members
 }
 
-// axios.post('http://localhost:3100/api/v1/member', member).then(response => {
+// axios.post('http://localhost:3100/api/v1/members', member).then(response => {
 fromComponent.$store.dispatch(types.CRUD_READ)
 
 // actions: {
 [types.CRUD_READ] ({ commit }) {
   utils.nProgress.start()
-  axios.get('http://localhost:3100/api/v1/member').then(response => {
+  axios.get('http://localhost:3100/api/v1/members').then(response => {
     console.log(response)
     commit(types.CRUD_READ, response.data.members)
     utils.nProgress.done()
@@ -808,7 +808,7 @@ src/shared/stores/modules/crudModule.js
     return
   }
   const spinner = utils.spinner().spin(spinnerTarget)
-  axios.put('http://localhost:3100/api/v1/member', {key, member}).then(response => {
+  axios.put('http://localhost:3100/api/v1/members', {key, member}).then(response => {
     console.log(response)
     spinner.stop()
     utils.toastr().success(response.data.result)
@@ -842,7 +842,7 @@ src/shared/stores/modules/crudModule.js
     return
   }
   const spinner = utils.spinner().spin(spinnerTarget)
-  axios.delete(`http://localhost:3100/api/v1/member/${key}`).then(response => {
+  axios.delete(`http://localhost:3100/api/v1/members/${key}`).then(response => {
     console.log(response)
     spinner.stop()
     utils.toastr().success(response.data.result)
