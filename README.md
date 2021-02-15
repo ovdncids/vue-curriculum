@@ -324,20 +324,17 @@ export default {
 ## v-show, v-if, props
 src/App.vue
 ```html
-<Nav
-  v-show="true"
-></Nav>
+<Nav v-show="false"></Nav>
 
-<section
-  v-if="true"
-></div>
+<Contents v-if="false"></Contents>
 
-<footer
-  :title="'푸터'"
->{{title}}</footer>
+<Footer :title="'푸터'">{{title}}</Footer>
 ```
 
 src/components/Footer.vue
+```html
+<footer>{{title}}</footer>
+```
 ```js
 export default {
   props: {
