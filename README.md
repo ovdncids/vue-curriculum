@@ -5,7 +5,7 @@ https://nodejs.org
 
 ## NVM (Node Version Manager)
 Node.js 설치 버전을 관리하는 프로그램. 심볼릭 링크를 이용하여 Node.js 버전을 그때 그때 변경한다.
-Node.js 버전 별로 자유롭게 설치, 이동, 삭제 가능하다. 현재는 Node.js v6, v8이 주류를 이룬다.
+Node.js 버전 별로 자유롭게 설치, 이동, 삭제 가능하다. 현재는 v8 이상이 주류를 이룬다.
 
 <!-- **Mac OS Node 삭제 방법**: https://gomugom.github.io/how-to-remove-node-from-macos/ -->
 
@@ -25,18 +25,22 @@ rm -rf ~/.npm
 rm -rf ~/.bower
 ``` -->
 
-**Mac OS**: https://gist.github.com/falsy/8aa42ae311a9adb50e2ca7d8702c9af1
+**Mac OS**
+
+https://github.com/nvm-sh/nvm
+
+https://gist.github.com/falsy/8aa42ae311a9adb50e2ca7d8702c9af1
+
 ```sh
 # 설치
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 
 # vi 에디터 실행
 vi ~/.bash_profile
 
 # 해당 경로 적용 시키키
-export NVM_DIR="$HOME/.nvm"
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 # ~/.bash_profile 재 실행 시키기
 source ~/.bash_profile
@@ -49,16 +53,16 @@ source ~/.bash_profile
 nvm ls
 
 # 해당 버전을 설치 한다.
-nvm install 8.12.0
+nvm install 14.15.5
 
 # 해당 버전을 삭제 한다.
-nvm uninstall 8.12.0
+nvm uninstall 14.15.5
 
 # 해당 버전을 사용 한다.
-nvm use 8.12.0
+nvm use 14.15.5
 
 # 기본 버전 변경 하기
-nvm alias default 8.12.0
+nvm alias default 14.15.5
 ```
 
 ## NPM (Node Package Manager)
@@ -82,48 +86,25 @@ https://stackoverflow.com/questions/29972396/how-to-set-tab-space-style
 "editor.detectIndentation": false
 ``` -->
 
-## Vue CLI 3
+## Vue CLI
 https://kr.vuejs.org/v2/guide/index.html
 
 https://cli.vuejs.org/guide
-
-https://scotch.io/tutorials/creating-vue-apps-with-the-vue-ui-tool
 ```sh
-# Vue CLI 3 설치
+# Vue CLI 설치
 npm install -g @vue/cli
 
 # Vue.js 프로젝트 생성
 vue create vue-study
-  # 생성이 안 될 경우
-    npm install -g @vue/cli-service-global
-  # 생성이 될 경우
-    # Manually select features 선택
-    # Babel, Router, Vuex, CSS Pre-processors, Linter / Formatter 선택
-      # Test 필요시 Unit Testing 선택
-    # Use history mode for router? Y 입력
-    # Pick a CSS Pre-processor: Sass/SCSS 선택
-    # ESLint with error prevention only 선택
-    # Lint on save 선택
-    # Mocha + Chai, Jest
-      # Test를 선택 했을 경우 보여짐
-        # Jest가 더 빠르므로 Jest 선택
-          # --watchAll
-            # watch 모드
-          # --verbose=false
-            # console.log 사용 가능
-    # In pacage.json 선택
-    # Save this as a preset for future projects? N 입력
-      # 현재 까지 선택 했던 사항을 별칭을 주어서 저장 할지 여부
+## Normal type without Test ([Vue 2] dart-sass, babel, router, vuex, eslint) 선택
 
-# VSCode 해당 디렉토리 열기
-# test
-npm run test:unit
-# build
+# VSCode로 해당 디렉토리 열기
+## build
 npm run build
 npm install -g serve
 serve -s dist
 
-# 프로젝트 실행
+## 프로젝트 실행
 npm run serve
 ```
 
