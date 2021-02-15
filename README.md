@@ -175,10 +175,10 @@ npm install -D sass-loader node-sass
 ``` -->
 
 ## 필요 없는 파일 지우기
-```
-src/assets/logo.png
-src/views (폴더 삭제)
-src/components/HelloWorld.vue
+```diff
+- src/assets/logo.png
+- src/views (폴더 삭제)
+- src/components/HelloWorld.vue
 ```
 
 src/router/index.js
@@ -367,7 +367,7 @@ src/components/container/
 + contents/CRUD.vue
 + contents/Search.vue
 ```
-src/routes.js
+src/router/index.js
 ```diff
 - import Home from './views/Home.vue'
 + import CRUD from './components/container/contents/CRUD.vue'
