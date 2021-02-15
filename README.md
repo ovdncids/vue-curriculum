@@ -166,40 +166,34 @@ git add .
 git rebase --continue
 ``` -->
 
-## Sass 설치
+<!-- ## Sass 설치
 css를 프로그램화 하여 색상 테마를 변수에 넣을 수 있고, 반복 부분을 저장하고 불러 올 수 있다. 이름은 Sass지만 파일명은 scss이다.
 
 https://sass-guidelin.es/ko/
 ```sh
 npm install -D sass-loader node-sass
-```
+``` -->
 
-### 필요 없는 파일 지우기
+## 필요 없는 파일 지우기
 ```
 src/assets/logo.png
-src/views
+src/views (폴더 삭제)
 src/components/HelloWorld.vue
 ```
 
-src/App.vue
-```html
-<template>
-  <div id="app">
-  </div>
-</template>
-```
-
-src/router.js
+src/router/index.js
 ```
 전부 주석 처리
 ```
 
 ## Markup
-src/App.vue
+src/App.vue (덮어 씌우기)
 ```html
 <template>
   <div id="app">
-    <header><h1>Vue.js Study</h1></header>
+    <header>
+      <h1>Vue.js tudy</h1>
+    </header>
     <hr />
     <div class="container">
       <div class="nav">
@@ -224,18 +218,9 @@ src/App.vue
     <footer>Copyright</footer>
   </div>
 </template>
-
-<script>
-export default {
-}
-</script>
-
-<style lang="scss">
-@import "~@/assets/styles/App.scss";
-</style>
 ```
 
-src/assets/styles/App.scss
+src/assets/scss/App.scss
 ```scss
 body {
   margin: 0;
@@ -295,12 +280,18 @@ h1, footer {
 }
 ```
 
-## CSS Flex
+src/main.js
+```js
+// App.scss 부르기
+import "@/assets/scss/App.scss"
+```
+
+<!-- ## CSS Flex
 https://opentutorials.org/course/2418/13526
 
 https://www.youtube.com/watch?v=eprXmC_j9A4
 
-**현재 브라우저 상황**: YouTube IE11 부터 지원. IE11 부터 Flex 사용 가능. IE10은 Flex 부분 오류가 있어서 사용에 주의 해야 한다.
+**현재 브라우저 상황**: YouTube IE11 부터 지원. IE11 부터 Flex 사용 가능. -->
 
 ## Vue Component 만들기
 Header.vue, Nav.vue, Contents.vue, Footer.vue 이렇게 Component 별로 파일을 나눈다.
