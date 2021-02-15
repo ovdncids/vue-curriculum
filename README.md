@@ -324,11 +324,11 @@ export default {
 ## v-show, v-if, props
 src/App.vue
 ```html
-<Nav v-show="false"></Nav>
+<Header v-show="false"></Header>
 
-<Contents v-if="false"></Contents>
+<Nav v-if="false"></Nav>
 
-<Footer :title="'푸터'">{{title}}</Footer>
+<Footer :title="'푸터'"></Footer>
 ```
 
 src/components/Footer.vue
@@ -348,21 +348,23 @@ export default {
 ## Vue router
 src/App.vue
 ```diff
+<template>
 - <Contents></Contents>
 + <router-view></router-view>
 
+<script>
 - import Contents from './components/container/Contents.vue'
 
-- Contents,
-
-<!-- Contents.vue 파일 삭제 -->
+export default {
+  components: {
+-   Contents,
 ```
 
-src/components/container/contents/
+src/components/container/
 ```diff
 - Contents.vue
-+ contents/CRUD.vue
 
++ contents/CRUD.vue
 + contents/Search.vue
 ```
 src/routes.js
