@@ -192,27 +192,21 @@ src/App.vue (덮어 씌우기)
 <template>
   <div id="app">
     <header>
-      <h1>Vue.js tudy</h1>
+      <h1>Vue.js study</h1>
     </header>
     <hr />
     <div class="container">
-      <div class="nav">
-        <nav>
-          <ul>
-            <li><h2>CRUD</h2></li>
-            <li><h2>Search</h2></li>
-          </ul>
-        </nav>
-      </div>
+      <nav class="nav">
+        <ul>
+          <li><h2>CRUD</h2></li>
+          <li><h2>Search</h2></li>
+        </ul>
+      </nav>
       <hr />
-      <div class="contents">
-        <section>
-          <div>
-            <h3>CRUD</h3>
-            <p>Contents</p>
-          </div>
-        </section>
-      </div>
+      <section class="contents">
+        <h3>CRUD</h3>
+        <p>Contents</p>
+      </section>
       <hr />
     </div>
     <footer>Copyright</footer>
@@ -297,7 +291,8 @@ https://www.youtube.com/watch?v=eprXmC_j9A4
 Header.vue, Nav.vue, Contents.vue, Footer.vue 이렇게 Component 별로 파일을 나눈다.
 
 src/App.vue
-```js
+```html
+<script>
 import Header from './components/Header.vue'
 import Nav from './components/container/Nav.vue'
 import Contents from './components/container/Contents.vue'
@@ -311,13 +306,13 @@ export default {
     Footer
   }
 }
+</script>
 ```
 
-기본 vue 파일
+기본 .vue 파일
 ```html
 <template>
-  <div>
-  </div>
+  <div></div>
 </template>
 
 <script>
@@ -326,40 +321,28 @@ export default {
 </script>
 ```
 
-## Vue props, v-show, v-if
+## v-show, v-if, props
 src/App.vue
 ```html
-// <Nav
-v-show="true"
+<Nav
+  v-show="true"
+></Nav>
 
-// <div class="contents"
-v-if="true"
+<section
+  v-if="true"
+></div>
 
-// <Footer
-:title="'Copyright'"
+<footer
+  :title="'푸터'"
+>{{title}}</footer>
 ```
 
 src/components/Footer.vue
-```html
-<div @click="toggleShow()">
-  <footer>{{title}} <span v-if="isShow">by</span></footer>
-</div>
-```
 ```js
 export default {
-  data() {
-    return {
-      isShow: true
-    }
-  },
   props: {
     title: {
-      default: 'Rightcopy'
-    }
-  },
-  methods: {
-    toggleShow() {
-      this.isShow = !this.isShow
+      default: 'Copyright'
     }
   }
 }
