@@ -65,27 +65,6 @@ nvm use 14.15.5
 nvm alias default 14.15.5
 ```
 
-## NPM (Node Package Manager)
-```sh
-# 상위 버전으로 업 한다. 현재 v6.4.1
-npm install -g npm
-```
-
-<!-- ## Visual Studio Code
-**Tab 스페이스 2칸으로 설정**: Preferences > 검색 > editor.detectIndent
-
-https://stackoverflow.com/questions/29972396/how-to-set-tab-space-style
-
-기본 텝 사이즈를 2칸으로 변경한다.
-```json
-"editor.tabSize": 2
-```
-
-해당 파일의 텝 사이즈를 무시하고 기본 텝 사이즈로 설정한다.
-```json
-"editor.detectIndentation": false
-``` -->
-
 ## Vue CLI
 https://kr.vuejs.org/v2/guide/index.html
 
@@ -108,7 +87,29 @@ serve -s dist
 npm run serve
 ```
 
-## 현재 문서 Git clone 하기
+<!-- ## Visual Studio Code
+**Tab 스페이스 2칸으로 설정**: Preferences > 검색 > editor.detectIndent
+
+https://stackoverflow.com/questions/29972396/how-to-set-tab-space-style
+
+기본 텝 사이즈를 2칸으로 변경한다.
+```json
+"editor.tabSize": 2
+```
+
+해당 파일의 텝 사이즈를 무시하고 기본 텝 사이즈로 설정한다.
+```json
+"editor.detectIndentation": false
+``` -->
+
+## GIT
+소스 관리를 위해 사용한다. 어느 파일이 언제 어떻게 변경 되었는지 쉽게 볼 수 있다.
+
+**GIT 설치**
+
+**VSCode 확장 Git Graph 설치**
+
+<!-- ## 현재 문서 Git clone 하기
 
 git clone https://github.com/ovdncids/vue-curriculum.git
 
@@ -140,7 +141,7 @@ git commit --amend -m ""
 **commit 취소**
 ```sh
 git reset HEAD~
-```
+``` -->
 
 <!-- **첫 commit 취소**
 ```sh
@@ -164,8 +165,6 @@ git rebase -i HEAD~2
 git add .
 git rebase --continue
 ``` -->
-
-**VSCode 확장 Git History 설치**
 
 ## Sass 설치
 css를 프로그램화 하여 색상 테마를 변수에 넣을 수 있고, 반복 부분을 저장하고 불러 올 수 있다. 이름은 Sass지만 파일명은 scss이다.
