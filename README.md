@@ -396,17 +396,17 @@ const routes = [
 ]
 ```
 
-src/components/container/Nav.vue (li 태그 부분 덮어 씌우기)
-```html
-<li><h2><router-link :to="{name: 'crud'}">CRUD</router-link></h2></li>
-<li><h2><router-link :to="{path: '/search'}">Search</router-link></h2></li>
-```
-
 src/main.js (router 부분 주석 풀기)
 ```js
 import router from './router'
 new Vue({
   router,
+```
+
+src/components/container/Nav.vue (li 태그 부분 덮어 씌우기)
+```html
+<li><h2><router-link :to="{name: 'CRUD'}">CRUD</router-link></h2></li>
+<li><h2><router-link :to="{path: '/search'}">Search</router-link></h2></li>
 ```
 
 **여기 까지가 Markup 개발자 분들이 할일 입니다.**
