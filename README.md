@@ -182,7 +182,7 @@ npm install -D sass-loader node-sass
 ```
 
 src/main.js (router 부분 주석 처리)
-```
+```js
 // import router from './router'
 new Vue({
   // router,
@@ -348,7 +348,7 @@ export default {
 ```
 
 ## Vue router
-src/App.vue
+src/App.vue (Contents 태그를 router-view 태그로 변경)
 ```diff
 <template>
 - <Contents></Contents>
@@ -396,14 +396,14 @@ const routes = [
 ]
 ```
 
-src/components/container/Nav.vue (<li> 부분 덮어 씌우기)
+src/components/container/Nav.vue (li 태그 부분 덮어 씌우기)
 ```html
 <li><h2><router-link :to="{name: 'crud'}">CRUD</router-link></h2></li>
 <li><h2><router-link :to="{path: '/search'}">Search</router-link></h2></li>
 ```
 
 src/main.js (router 부분 주석 풀기)
-```
+```js
 import router from './router'
 new Vue({
   router,
