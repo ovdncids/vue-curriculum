@@ -181,9 +181,11 @@ npm install -D sass-loader node-sass
 - src/components/HelloWorld.vue
 ```
 
-src/router/index.js
+src/main.js (router 부분 주석 처리)
 ```
-전부 주석 처리
+// import router from './router'
+new Vue({
+  // router,
 ```
 
 ## Markup
@@ -367,35 +369,44 @@ src/components/container/
 + contents/CRUD.vue
 + contents/Search.vue
 ```
-src/router/index.js
+src/router/index.js (3줄 부터 21줄 까지 덮어 씌우기)
 ```diff
-- import Home from './views/Home.vue'
-+ import CRUD from './components/container/contents/CRUD.vue'
+- import Home from '../views/Home.vue'
+- ...
+- ]
+```
+```js
+import CRUD from '../components/container/contents/CRUD.vue'
+import Search from '../components/container/contents/Search.vue'
 
-+ { path: '/', redirect: '/crud' },
+Vue.use(VueRouter)
 
-- path: '',
-- name: 'home',
-- component: Home
-+ path: '/crud',
-+ name: 'crud',
-+ component: CRUD
-
-- path: '/about',
-- name: 'about',
-+ path: '/search',
-+ name: 'search',
-
-- component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-+ // component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-+ component: () => import('./components/container/contents/Search.vue')
-
+const routes = [
+  { path: '/', redirect: '/crud' },
+  {
+    path: '/crud',
+    name: 'CRUD',
+    component: CRUD
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    component: Search
+  }
+]
 ```
 
-src/components/container/Nav.vue
+src/components/container/Nav.vue (<li> 부분 덮어 씌우기)
 ```html
 <li><h2><router-link :to="{name: 'crud'}">CRUD</router-link></h2></li>
 <li><h2><router-link :to="{path: '/search'}">Search</router-link></h2></li>
+```
+
+src/main.js (router 부분 주석 풀기)
+```
+import router from './router'
+new Vue({
+  router,
 ```
 
 **여기 까지가 Markup 개발자 분들이 할일 입니다.**
