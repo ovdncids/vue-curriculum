@@ -206,8 +206,10 @@ src/App.vue (덮어 씌우기)
       </nav>
       <hr />
       <section class="contents">
-        <h3>CRUD</h3>
-        <p>Contents</p>
+        <div>
+          <h3>CRUD</h3>
+          <p>Contents</p>
+        </div>
       </section>
       <hr />
     </div>
@@ -414,47 +416,49 @@ src/components/container/Nav.vue (li 태그 부분 덮어 씌우기)
 ## CRUD Conpenent Markup
 src/components/container/contents/CRUD.vue
 ```html
-<div>
-  <h3>CRUD</h3>
-  <hr class="d-block" />
+<template>
   <div>
-    <h4>Read</h4>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Created Date</th>
-          <th>Modify</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>횽길동</td>
-          <td>39</td>
-          <td>2018-10-04</td>
-          <td>
-            <button>Update</button>
-            <button>Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <h3>CRUD</h3>
+    <hr class="d-block" />
+    <div>
+      <h4>Read</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Created Date</th>
+            <th>Modify</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>횽길동</td>
+            <td>39</td>
+            <td>2018-10-04</td>
+            <td>
+              <button>Update</button>
+              <button>Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr class="d-block" />
+    <div>
+      <h4>Create</h4>
+      <input type="text" placeholder="Name" />
+      <input type="text" placeholder="Age" />
+      <button>Create</button>
+    </div>
   </div>
-  <hr class="d-block" />
-  <div>
-    <h4>Create</h4>
-    <input type="text" placeholder="Name" />
-    <input type="text" placeholder="Age" />
-    <button>Create</button>
-  </div>
-</div>
+</template>
 ```
 
 ## Vue Store 만들기
 **Store 개념 설명**
 
-Component는 상하, 수직, 부모 자식 관계인데 Store는 수평, 평등 관계이다.
+Component들에 글로벌 함수, 변수라고 생각하면 쉽다, store 값이 변하면 해당 값을 바라 보는 모든 Component가 수정 된다.
 
 **Vuex 설치**
 
