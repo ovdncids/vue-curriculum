@@ -432,7 +432,7 @@ src/components/container/contents/Members.vue
         </thead>
         <tbody>
           <tr>
-            <td>횽길동</td>
+            <td>홍길동</td>
             <td>20</td>
             <td>
               <button>Update</button>
@@ -637,7 +637,7 @@ src/store/moduleMembers.js
 src/components/container/contents/Members.vue (17줄)
 ```diff
 - <tr>
--  <td>횽길동</td>
+-  <td>홍길동</td>
 -  <td>20</td>
 ```
 ```html
@@ -866,8 +866,8 @@ src/components/container/contents/Search.vue
       </thead>
       <tbody>
         <tr>
-          <td>횽길동</td>
-          <td>39</td>
+          <td>홍길동</td>
+          <td>20</td>
           <td>2018-10-04</td>
         </tr>
       </tbody>
