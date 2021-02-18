@@ -509,6 +509,7 @@ src/components/container/contents/Members.vue (32줄)
 ```diff
 - <input type="text" placeholder="Name" />
 - <input type="text" placeholder="Age" />
+- <button>Create</button>
 ```
 ```html
 <input type="text" placeholder="Name" v-model="member.name" />
