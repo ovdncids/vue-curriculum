@@ -612,7 +612,7 @@ src/shared/stores/modules/crudModule.js
   utils.spinner().spin(spinnerTarget)
 ``` -->
 
-## Store Members CRUD
+## Members Store CRUD
 ### Read
 src/store/moduleMembers.js
 ```js
