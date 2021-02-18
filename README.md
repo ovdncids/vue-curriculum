@@ -278,9 +278,8 @@ h1, footer {
 }
 ```
 
-src/main.js
+src/main.js (App.scss 부르기)
 ```js
-// App.scss 부르기
 import "@/assets/scss/App.scss"
 ```
 
@@ -480,24 +479,18 @@ export const moduleMembers = {
 }
 ```
 
-**CRUD Store 등록하기**
+**moduleMembers.js를 Store에 등록하기**
 
 src/store/index.js
 ```diff
-+ import { moduleMembers } from './modules/moduleMembers.js'
++ import { moduleMembers } from './moduleMembers.js'
 
 export default new Vuex.Store({
   modules: {
 +   members: moduleMembers
 ```
 
-src/main.js
-```diff
-- import store from './store'
-+ import store from './shared/stores/store'
-```
-
-## error: Unexpected console statement (no-console) 해결
+<!-- ## error: Unexpected console statement (no-console) 해결
 package.json
 ```json
 "rules": {
@@ -509,29 +502,27 @@ package.json
 ```sh
 vue add @vue/eslint
 Error prevention only > Lint on save
-```
+``` -->
 
-## CRUD Conpenent Store inject
-src/components/container/contents/CRUD.vue
-```html
-// <h4>Create</h4>  밑에
+## Members Conpenent Store inject
+src/components/container/contents/Members.vue (32줄)
+```diff
+- <input type="text" placeholder="Name" v-model="member.name" />
+- <input type="text" placeholder="Age" v-model="member.age" />
 <input type="text" placeholder="Name" v-model="member.name" />
 <input type="text" placeholder="Age" v-model="member.age" />
-<button @click="create()">Create</button>
+<button @click="membersCreate()">Create</button>
 ```
 ```js
-import { mapState } from 'vuex'
-import * as types from '../../../shared/stores/types'
-
 export default {
   computed: {
-    ...mapState({
-      member: state => state.crud.member
-    })
+    member() {
+      return this.$store.state.members.member
+    }
   },
   methods: {
-    create() {
-      this.$store.dispatch(types.CRUD_CREATE)
+    membersCreate() {
+      this.$store.dispatch('membersCreate')
     }
   },
   created() {
