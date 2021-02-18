@@ -655,6 +655,65 @@ export default {
     this.$store.dispatch('membersRead')
 ```
 
+### Update
+src/store/moduleMembers.js
+```js
+  actions: {
+    membersUpdate(thisStore, memberUpdate) {
+      thisStore.state.members[memberUpdate.index] = memberUpdate.member
+      console.log('Done membersUpdate', moduleMembers.state.members)
+    }
+```
+
+src/components/container/contents/Members.vue (18줄)
+```diff
+- <td>{{member.name}}</td>
+- <td>{{member.age}}</td>
+- <td>
+-  <button>Update</button>
+```
+```html
+<td><input type="text" placeholder="Name" v-model="member.name" /></td>
+<td><input type="text" placeholder="Age" v-model="member.age" /></td>
+<td>
+  <button @click="membersUpdate(index, member)">Update</button>
+```
+```js
+export default {
+  methods: {
+    membersUpdate(index, member) {
+      this.$store.dispatch('membersUpdate', {
+        index: index,
+        member: member
+      })
+    }
+```
+
+### Delete
+src/store/moduleMembers.js
+```js
+  actions: {
+    membersDelete(thisStore, index) {
+      thisStore.state.members.splice(index, 1)
+      console.log('Done membersDelete', moduleMembers.state.members)
+    }
+```
+
+src/components/container/contents/Members.vue (24줄)
+```diff
+- <button>Delete</button>
+```
+```html
+<button @click="membersDelete(index)">Delete</button>
+```
+```js
+export default {
+  methods: {
+    membersDelete(index) {
+      this.$store.dispatch('membersDelete', index)
+    }
+```
+
 ## node.js 서버 실행
 ```sh
 npm install -g nodemon
