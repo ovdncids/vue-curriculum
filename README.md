@@ -506,9 +506,11 @@ Error prevention only > Lint on save
 
 ## Members Conpenent Store inject
 src/components/container/contents/Members.vue (32줄)
-```diff html
+```diff
 - <input type="text" placeholder="Name" />
 - <input type="text" placeholder="Age" />
+```
+```html
 <input type="text" placeholder="Name" v-model="member.name" />
 <input type="text" placeholder="Age" v-model="member.age" />
 <button @click="membersCreate()">Create</button>
