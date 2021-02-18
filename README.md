@@ -200,14 +200,14 @@ src/App.vue (덮어 씌우기)
     <div class="container">
       <nav class="nav">
         <ul>
-          <li><h2>CRUD</h2></li>
+          <li><h2>Members</h2></li>
           <li><h2>Search</h2></li>
         </ul>
       </nav>
       <hr />
       <section class="contents">
         <div>
-          <h3>CRUD</h3>
+          <h3>Members</h3>
           <p>Contents</p>
         </div>
       </section>
@@ -332,7 +332,7 @@ src/App.vue
 
 <Nav v-if="false"></Nav>
 
-<Footer :title="'푸터'"></Footer>
+<Footer :title="'카피라이트'"></Footer>
 ```
 
 src/components/Footer.vue
@@ -368,7 +368,7 @@ src/components/container/
 ```diff
 - Contents.vue
 
-+ contents/CRUD.vue
++ contents/Members.vue
 + contents/Search.vue
 ```
 src/router/index.js (3줄 부터 21줄 까지 덮어 씌우기)
@@ -378,17 +378,17 @@ src/router/index.js (3줄 부터 21줄 까지 덮어 씌우기)
 - ]
 ```
 ```js
-import CRUD from '../components/container/contents/CRUD.vue'
+import Members from '../components/container/contents/Members.vue'
 import Search from '../components/container/contents/Search.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: '/crud' },
+  { path: '/', redirect: '/members' },
   {
-    path: '/crud',
-    name: 'CRUD',
-    component: CRUD
+    path: '/members',
+    name: 'Members',
+    component: Members
   },
   {
     path: '/search',
@@ -407,18 +407,18 @@ new Vue({
 
 src/components/container/Nav.vue (li 태그 부분 덮어 씌우기)
 ```html
-<li><h2><router-link :to="{name: 'CRUD'}">CRUD</router-link></h2></li>
+<li><h2><router-link :to="{name: 'Members'}">Members</router-link></h2></li>
 <li><h2><router-link :to="{path: '/search'}">Search</router-link></h2></li>
 ```
 
 **여기 까지가 Markup 개발자 분들이 할일 입니다.**
 
-## CRUD Conpenent Markup
-src/components/container/contents/CRUD.vue
+## Members Conpenent Markup
+src/components/container/contents/Members.vue
 ```html
 <template>
   <div>
-    <h3>CRUD</h3>
+    <h3>Members</h3>
     <hr class="d-block" />
     <div>
       <h4>Read</h4>
@@ -458,21 +458,13 @@ src/components/container/contents/CRUD.vue
 ## Vue Store 만들기
 **Store 개념 설명**
 
-Component들에 글로벌 함수, 변수라고 생각하면 쉽다, store 값이 변하면 해당 값을 바라 보는 모든 Component가 수정 된다.
+Component들에 글로벌 함수 또는 변수라고 생각하면 쉽다, store 값이 변하면 해당 값을 바라 보는 모든 Component가 수정 된다.
 
-**Vuex 설치**
-
-src/shared/stores/types.js
+src/store/moduleMembers.js
 ```js
-export const CRUD_CREATE = 'crud/CREATE'
-```
-
-src/shared/stores/modules/crudModule.js
-```js
-import * as types from '../types'
-
-export const crudModule = {
+export const moduleMembers = {
   state: {
+    members: [],
     member: {
       name: '',
       age: ''
@@ -481,32 +473,22 @@ export const crudModule = {
   mutations: {
   },
   actions: {
-    [types.CRUD_CREATE] (commit) {
-      console.log(types.CRUD_CREATE)
-      console.log(crudModule.state.member)
+    membersCreate() {
+      console.log(moduleMembers.state.member)
     }
   }
 }
 ```
 
 **CRUD Store 등록하기**
-src/shared/stores/store.js
-```diff
-- src/store.js
-+ src/shared/stores/store.js
-```
-```js
-import Vue from 'vue'
-import Vuex from 'vuex'
-import { crudModule } from './modules/crudModule'
 
-Vue.use(Vuex)
+src/store/index.js
+```diff
++ import { moduleMembers } from './modules/moduleMembers.js'
 
 export default new Vuex.Store({
   modules: {
-    crud: crudModule
-  }
-})
++   members: moduleMembers
 ```
 
 src/main.js
