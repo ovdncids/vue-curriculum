@@ -426,15 +426,14 @@ src/components/container/contents/Members.vue
           <tr>
             <th>Name</th>
             <th>Age</th>
-            <th>Created Date</th>
-            <th>Modify</th>
+            <th>Update</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>횽길동</td>
-            <td>39</td>
-            <td>2018-10-04</td>
+            <td>20</td>
             <td>
               <button>Update</button>
               <button>Delete</button>
@@ -472,8 +471,12 @@ export const moduleMembers = {
   mutations: {
   },
   actions: {
-    membersCreate() {
-      console.log(moduleMembers.state.member)
+    membersCreate(thisStore) {
+      thisStore.state.members.push({
+        name: moduleMembers.state.member.name,
+        age: moduleMembers.state.member.age
+      })
+      console.log('Done membersCreate', moduleMembers.state.members)
     }
   }
 }
@@ -542,7 +545,7 @@ export default {
 debugger
 ```
 
-## Axios(서버 연동), toastr(메시지 창), spin.js(로딩 스피너), nprogress(프로그래스 바), lodash(배열, 오브젝트 유틸리티), moment(시간관련 유틸리티) 설치
+<!-- ## Axios(서버 연동), toastr(메시지 창), spin.js(로딩 스피너), nprogress(프로그래스 바), lodash(배열, 오브젝트 유틸리티), moment(시간관련 유틸리티) 설치
 ```sh
 npm install --save axios toastr spin.js nprogress lodash moment
 ```
@@ -607,6 +610,49 @@ src/shared/stores/modules/crudModule.js
 // [types.CRUD_CREATE] () {
 [types.CRUD_CREATE] (commit, { spinnerTarget, fromComponent }) {
   utils.spinner().spin(spinnerTarget)
+``` -->
+
+## Store Members CRUD
+### Read
+src/store/moduleMembers.js
+```js
+  mutations: {
+    membersRead(state, members) {
+      state.members = members
+    }
+  actions: {
+    membersRead(thisStore) {
+      const members = [{
+        name: '홍길동',
+        age: 20
+      }, {
+        name: '춘향이',
+        age: 16
+      }]
+      thisStore.commit('membersRead', members)
+      console.log('Done membersRead', moduleMembers.state.members)
+    }
+```
+
+src/components/container/contents/Members.vue (17줄)
+```diff
+- <tr>
+-  <td>횽길동</td>
+-  <td>20</td>
+```
+```html
+<tr v-for="(member, index) in members" :key="index">
+  <td>{{member.name}}</td>
+  <td>{{member.age}}</td>
+```
+```js
+export default {
+  computed: {
+    members() {
+      return this.$store.state.members.members
+    }
+  created() {
+    this.$store.dispatch('membersRead')
 ```
 
 ## node.js 서버 실행
