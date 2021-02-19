@@ -761,8 +761,8 @@ import axios from 'axios'
 
 export const moduleSearch = {
   actions: {
-    searchRead(thisStore, name) {
-      const url = 'http://localhost:3100/api/v1/search?name=' + name
+    searchRead(thisStore, search) {
+      const url = 'http://localhost:3100/api/v1/search?search=' + search
       axios.get(url).then(function(response) {
         console.log('Done searchRead', response)
         thisStore.commit('membersRead', response.data.members)
@@ -793,7 +793,7 @@ src/components/container/contents/Search.vue
     <h3>Search</h3>
     <hr class="d-block" />
     <div>
-      <input type="text" placeholder="Name" v-model="member.name" @keyup="keyUp($event)" />
+      <input type="text" placeholder="Search" v-model="search" @keyup="keyUp($event)" />
       <button @click="searchRead()">Search</button>
     </div>
     <hr class="d-block" />
@@ -818,48 +818,47 @@ src/components/container/contents/Search.vue
 ```
 ```js
 export default {
+  data() {
+    return {
+      search: ''
+    }
+  },
   computed: {
     members() {
       return this.$store.state.members.members
-    },
-    member() {
-      return this.$store.state.members.member
     }
   },
   methods: {
     keyUp($event) {
-      if ($event.key === 'Enter') {
-        this.searchRead()
-      }
+      if ($event.key === 'Enter') this.searchRead()
     },
     searchRead() {
-      this.$store.dispatch('searchRead', this.member.name)
+      this.$store.dispatch('searchRead', this.search)
     }
   },
   created() {
-    this.member.name = ''
-    this.$store.dispatch('searchRead', '')
+    this.$store.dispatch('searchRead', this.search)
   }
 }
 ```
 
 ## Search Component 파라미터 변경과 새로고침 적용
 src/components/container/contents/Search.vue
-```js
-// export default {
-watch: {
-  '$route.query': function (query, beforeQuery) {
-    console.log(query, beforeQuery)
-    this.member.name = query.name || ''
-    this.$store.dispatch(types.SEARCH_READ)
+```diff
+export default {
+  watch: {
+    '$route.query': function (query, beforeQuery) {
+      console.log(query, beforeQuery)
+      this.search = query.search || ''
+      this.$store.dispatch('searchRead', this.search)
+    }
   }
-},
-
-// read() {
-this.$router.push({ name: 'search', query: { name: this.member.name }})
-
-// created() {
-this.member.name = this.$route.query.name || ''
+  methods: {
+    searchRead() {
+-     this.$store.dispatch('searchRead', this.search)
++     this.$router.push({ name: 'Search', query: { search: this.search }})
+  created() {
++   this.search = this.$route.query.search || ''
 ```
 
 ## Proxy 설정
