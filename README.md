@@ -844,7 +844,7 @@ export default {
 
 ## Search Component 파라미터 변경과 새로고침 적용
 src/components/container/contents/Search.vue
-```diff
+```js
 export default {
   watch: {
     '$route.query': function (query, beforeQuery) {
@@ -853,6 +853,8 @@ export default {
       this.$store.dispatch('searchRead', this.search)
     }
   }
+```
+```diff
   methods: {
     searchRead() {
 -     this.$store.dispatch('searchRead', this.search)
@@ -862,25 +864,13 @@ export default {
 ```
 
 ## Proxy 설정
-
-package.json
-```json
-"vue": {
-  "devServer": {
-    "proxy": "http://localhost:3100"
-  }
-}
-```
-
-For CLI3: vue.config.js
+/vue.config.js (파일 생성)
 ```js
-'use strict'
-
 module.exports = {
-devServer: {
-  proxy: {
-    '/api': {
-      target: 'http://localhost:3100',
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3100',
         changeOrigin: true
       }
     }
