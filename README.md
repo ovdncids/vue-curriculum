@@ -472,10 +472,7 @@ export const moduleMembers = {
   },
   actions: {
     membersCreate(thisStore) {
-      thisStore.state.members.push({
-        name: moduleMembers.state.member.name,
-        age: moduleMembers.state.member.age
-      })
+      thisStore.state.members.push(thisStore.state.member)
       console.log('Done membersCreate', moduleMembers.state.members)
     }
   }
@@ -544,73 +541,6 @@ export default {
 ```js
 debugger
 ```
-
-<!-- ## Axios(서버 연동), toastr(메시지 창), spin.js(로딩 스피너), nprogress(프로그래스 바), lodash(배열, 오브젝트 유틸리티), moment(시간관련 유틸리티) 설치
-```sh
-npm install --save axios toastr spin.js nprogress lodash moment
-```
-
-## Validation with toastr
-https://github.com/CodeSeven/toastr
-
-src/shared/utils.js
-```js
-import Toastr from 'toastr'
-import 'toastr/build/toastr.min.css'
-
-export const toastr = () => {
-  return Toastr
-}
-Toastr.options.closeButton = true
-Toastr.options.hideDuration = 200
-```
-
-src/shared/stores/modules/crudModule.js
-```js
-import * as utils from '../../utils'
-
-// [types.CRUD_CREATE] () {
-// validation
-const member = crudModule.state.member
-if (!member.name) {
-  utils.toastr().warning('Please text your name.')
-  return
-}
-if (!Number(member.age) || Number(member.age) <= 0) {
-  utils.toastr().warning('Please text your age and upper than 0.')
-  return
-}
-```
-
-## Spin.js
-https://spin.js.org/
-
-src/shared/utils.js
-```js
-import { Spinner } from 'spin.js'
-import 'spin.js/spin.css'
-
-export const spinner = () => {
-  return new Spinner({scale: 0.5})
-}
-```
-
-src/components/container/contents/CRUD.vue
-```html
-<button class="relative pointer" @click="create($event.target)">Create</button>
-```
-```js
-create(spinnerTarget) {
-  this.$store.dispatch(types.CRUD_CREATE, { spinnerTarget, fromComponent: this })
-}
-```
-
-src/shared/stores/modules/crudModule.js
-```js
-// [types.CRUD_CREATE] () {
-[types.CRUD_CREATE] (commit, { spinnerTarget, fromComponent }) {
-  utils.spinner().spin(spinnerTarget)
-``` -->
 
 ## Members Store CRUD
 ### Read
@@ -714,192 +644,107 @@ export default {
     }
 ```
 
-## node.js 서버 실행
+## Backend Server
+* [Download](https://github.com/ovdncids/vue-curriculum/raw/master/download/express-server.zip)
 ```sh
-npm install -g nodemon
-nodemon index.js
+# BE 서버 실행 방법
+npm install
+node index.js
+# 터미널 종료
+Ctrl + c
 ```
 
 ## Axios 서버 연동
 https://github.com/axios/axios
-
-### Create
-src/shared/utils.js
-```js
-export const apiCommonError = (error, spinner) => {
-  console.log(error)
-  console.log(error.response)
-  const errMessage = (error.response && error.response.data && (error.response.data.message || error.response.data.errMessage || error.response.data.sqlMessage)) || error
-  toastr().error(errMessage)
-  if (spinner) {
-    spinner.stop()
-  }
-}
+```sh
+npm install axios
 ```
 
-src/shared/stores/modules/crudModule.js
+### Create
+src/store/index.js
+```js
+export default new Vuex.Store({
+  actions: {
+    axiosError(thisStore, error) {
+      console.error(error.response || error.message || error)
+    }
+```
+
+src/store/moduleMembers.js
 ```js
 import axios from 'axios'
-
-// [types.CRUD_CREATE] (commit, { spinnerTarget, fromComponent }) {
-const spinner = utils.spinner().spin(spinnerTarget)
-axios.post('http://localhost:3100/api/v1/members', member).then(response => {
-  console.log(response)
-  spinner.stop()
-  utils.toastr().success(response.data.result)
-}).catch(error => {
-  utils.apiCommonError(error, spinner)
-})
+```
+```diff
+  actions: {
+    membersCreate(thisStore) {
+-     thisStore.state.members.push(thisStore.state.member)
+-     console.log('Done membersCreate', moduleMembers.state.members)
+```
+```js
+      axios.post('http://localhost:3100/api/v1/members', thisStore.state.member).then(function(response) {
+        console.log('Done membersCreate', response)
+        thisStore.dispatch('membersRead')
+      }).catch(function(error) {
+        thisStore.dispatch('axiosError', error)
+      })
 ```
 
 ### Read
-**nprogress**: https://github.com/rstacruz/nprogress
-
-src/shared/utils.js
-```js
-import * as NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
-
-// export const apiCommonError = (error, spinner) => {
-nProgress.done()
-
-export const nProgress = {
-  start: () => NProgress.start(),
-  done: () => NProgress.done()
-}
-```
-
-src/shared/stores/types.js
-```js
-export const CRUD_READ = 'crud/READ'
-```
-
-src/shared/stores/modules/crudModule.js
-```js
-// state: {
-members: []
-
-// mutations: {
-[types.CRUD_READ] (state, members) {
-  state.members = members
-}
-
-// axios.post('http://localhost:3100/api/v1/members', member).then(response => {
-fromComponent.$store.dispatch(types.CRUD_READ)
-
-// actions: {
-[types.CRUD_READ] ({ commit }) {
-  utils.nProgress.start()
-  axios.get('http://localhost:3100/api/v1/members').then(response => {
-    console.log(response)
-    commit(types.CRUD_READ, response.data.members)
-    utils.nProgress.done()
-  }).catch(error => {
-    utils.apiCommonError(error)
-  })
-}
-```
-
-src/components/container/contents/CRUD.vue
-```html
-// <tbody>
-<tr v-for="(member, key) in members" :key="key">
-  <td>{{member.name}}</td>
-  <td>{{member.age}}</td>
-  <td>{{moment(member.createdDate).format('YYYY-MM-DD HH:mm')}}</td>
+src/store/moduleMembers.js
+```diff
+  actions: {
+    membersRead(thisStore) {
+-     const members = [{
+-       name: '홍길동',
+-       age: 20
+-     }, {
+-       name: '춘향이',
+-       age: 16
+-     }]
+-     thisStore.commit('membersRead', members)
+-     console.log('Done membersRead', moduleMembers.state.members)
 ```
 ```js
-import moment from 'moment'
-
-// computed: {
-...mapState({
-  member: state => state.crud.member,
-  members: state => state.crud.members
-}),
-moment() {
-  return moment
-}
-
-// created() {
-this.$store.dispatch(types.CRUD_READ)
+      axios.get('http://localhost:3100/api/v1/members').then(function(response) {
+        console.log('Done membersRead', response)
+        thisStore.commit('membersRead', response.data.members)
+      }).catch(function(error) {
+        thisStore.dispatch('axiosError', error)
+      })
 ```
 
 ### Update
-src/shared/stores/types.js
-```js
-export const CRUD_UPDATE = 'crud/UPDATE'
-```
-
-src/components/container/contents/CRUD.vue
-```html
-<td><input type="text" placeholder="Name" v-model="member.name" /></td>
-<td><input type="text" placeholder="Age" v-model="member.age" /></td>
-
-<button class="relative pointer" @click="update($event.target, key)">Update</button>
+src/store/moduleMembers.js
+```diff
+  actions: {
+    membersUpdate(thisStore, memberUpdate) {
+-     thisStore.state.members[memberUpdate.index] = memberUpdate.member
+-     console.log('Done membersRead', moduleMembers.state.members)
 ```
 ```js
-// methods: {
-update(spinnerTarget, key) {
-  this.$store.dispatch(types.CRUD_UPDATE, { spinnerTarget, fromComponent: this, key })
-}
-```
-
-src/shared/stores/modules/crudModule.js
-```js
-[types.CRUD_UPDATE] (commit, { spinnerTarget, fromComponent, key }) {
-  const member = crudModule.state.members[key]
-  if (!member.name) {
-    utils.toastr().warning('Please text your name.')
-    return
-  }
-  if (!Number(member.age) || Number(member.age) <= 0) {
-    utils.toastr().warning('Please text your age and upper than 0.')
-    return
-  }
-  const spinner = utils.spinner().spin(spinnerTarget)
-  axios.put('http://localhost:3100/api/v1/members', {key, member}).then(response => {
-    console.log(response)
-    spinner.stop()
-    utils.toastr().success(response.data.result)
-    fromComponent.$store.dispatch(types.CRUD_READ)
-  }).catch(error => {
-    utils.apiCommonError(error, spinner)
-  })
-}
+      axios.patch('http://localhost:3100/api/v1/members', memberUpdate).then(function(response) {
+        console.log('Done membersUpdate', response)
+        thisStore.dispatch('membersRead')
+      }).catch(function(error) {
+        thisStore.dispatch('axiosError', error)
+      })
 ```
 
 ### Delete
-src/shared/stores/types.js
-```js
-export const CRUD_DELETE = 'crud/DELETE'
-```
-
-src/components/container/contents/CRUD.vue
-```html
-<button class="relative pointer" @click="del($event.target, key)">Delete</button>
+src/store/moduleMembers.js
+```diff
+  actions: {
+    membersUpdate(thisStore, memberUpdate) {
+-     thisStore.state.members.splice(index, 1)
+-     console.log('Done membersDelete', moduleMembers.state.members)
 ```
 ```js
-del(spinnerTarget, key) {
-  this.$store.dispatch(types.CRUD_DELETE, { spinnerTarget, fromComponent: this, key })
-}
-```
-
-src/shared/stores/modules/crudModule.js
-```js
-[types.CRUD_DELETE] (commit, { spinnerTarget, fromComponent, key }) {
-  if (!window.confirm('Are you sure?')) {
-    return
-  }
-  const spinner = utils.spinner().spin(spinnerTarget)
-  axios.delete(`http://localhost:3100/api/v1/members/${key}`).then(response => {
-    console.log(response)
-    spinner.stop()
-    utils.toastr().success(response.data.result)
-    fromComponent.$store.dispatch(types.CRUD_READ)
-  }).catch(error => {
-    utils.apiCommonError(error, spinner)
-  })
-}
+      axios.delete('http://localhost:3100/api/v1/members/' + index).then(function(response) {
+        console.log('Done membersDelete', response)
+        thisStore.dispatch('membersRead')
+      }).catch(function(error) {
+        thisStore.dispatch('axiosError', error)
+      })
 ```
 
 ## Search Conpenent Markup
