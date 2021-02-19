@@ -412,51 +412,10 @@ src/components/container/Nav.vue (li 태그 부분 덮어 씌우기)
 
 **여기 까지가 Markup 개발자 분들이 할일 입니다.**
 
-## Members Component Markup
-src/components/container/contents/Members.vue
-```html
-<template>
-  <div>
-    <h3>Members</h3>
-    <hr class="d-block" />
-    <div>
-      <h4>Read</h4>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Update</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>홍길동</td>
-            <td>20</td>
-            <td>
-              <button>Update</button>
-              <button>Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <hr class="d-block" />
-    <div>
-      <h4>Create</h4>
-      <input type="text" placeholder="Name" />
-      <input type="text" placeholder="Age" />
-      <button>Create</button>
-    </div>
-  </div>
-</template>
-```
-
-## Vue Store 만들기
+## Members Store 만들기
 **Store 개념 설명**
 
-Component들에 글로벌 함수 또는 변수라고 생각하면 쉽다, store 값이 변하면 해당 값을 바라 보는 모든 Component가 수정 된다.
+Component가 사용하는 글로벌 함수 또는 변수라고 생각하면 쉽다, store 값이 변하면 해당 값을 바라 보는 모든 Component가 수정 된다.
 
 src/store/moduleMembers.js
 ```js
@@ -490,32 +449,47 @@ export default new Vuex.Store({
 +   members: moduleMembers
 ```
 
-<!-- ## error: Unexpected console statement (no-console) 해결
-package.json
-```json
-"rules": {
-  "no-console": "off"
-}
-```
-
-안될 경우
-```sh
-vue add @vue/eslint
-Error prevention only > Lint on save
-``` -->
-
 ## Members Component Store inject
-src/components/container/contents/Members.vue (32줄)
-```diff
-- <input type="text" placeholder="Name" />
-- <input type="text" placeholder="Age" />
-- <button>Create</button>
-```
+src/components/container/contents/Members.vue
 ```html
-<input type="text" placeholder="Name" v-model="member.name" />
-<input type="text" placeholder="Age" v-model="member.age" />
-<button @click="membersCreate()">Create</button>
+<template>
+  <div>
+    <h3>Members</h3>
+    <hr class="d-block" />
+    <div>
+      <h4>Read</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>홍길동</td>
+            <td>20</td>
+            <td>
+              <button>Update</button>
+              <button>Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr class="d-block" />
+    <div>
+      <h4>Create</h4>
+      <input type="text" placeholder="Name" v-model="member.name" />
+      <input type="text" placeholder="Age" v-model="member.age" />
+      <button @click="membersCreate()">Create</button>
+    </div>
+  </div>
+</template>
 ```
+
 ```js
 export default {
   computed: {
@@ -781,95 +755,90 @@ src/components/container/contents/Search.vue
 ```
 
 ## Search Store 만들기
-
-src/shared/stores/types.js
+src/shared/stores/modules/moduleSearch.js
 ```js
-export const SEARCH_READ = 'search/READ'
-```
-
-src/shared/stores/modules/searchModule.js
-```js
-import * as types from '../types'
-import * as utils from '../../utils'
 import axios from 'axios'
 
-export const searchModule = {
-  state: {
-    member: {
-      name: ''
-    },
-    members: []
-  },
-  mutations: {
-    [types.SEARCH_READ] (state, members) {
-      state.members = members
-    }
-  },
+export const moduleSearch = {
   actions: {
-    [types.SEARCH_READ] ({ commit }) {
-      utils.nProgress.start()
-      axios.get(`http://localhost:3100/api/v1/search?name=${searchModule.state.member.name}`).then(response => {
-        console.log(response)
-        commit(types.SEARCH_READ, response.data.members)
-        utils.nProgress.done()
-      }).catch(error => {
-        utils.apiCommonError(error)
+    searchRead(thisStore, name) {
+      const url = 'http://localhost:3100/api/v1/search?name=' + name
+      axios.get(url).then(function(response) {
+        console.log('Done searchRead', response)
+        thisStore.commit('membersRead', response.data.members)
+      }).catch(function(error) {
+        thisStore.dispatch('axiosError', error)
       })
     }
   }
 }
 ```
 
-**Search Store 등록하기**
-src/shared/stores/store.js
-```js
-import { searchModule } from './modules/searchModule'
+**moduleSearch.js를 Store에 등록하기**
 
-// modules: {
-search: searchModule
+src/store/index.js
+```diff
++ import { moduleSearch } from './moduleSearch.js'
+
+export default new Vuex.Store({
+  modules: {
++   search: moduleSearch
 ```
 
 ## Search Component Store inject
 src/components/container/contents/Search.vue
 ```html
-<input type="text" placeholder="Name" v-model="member.name" @keypress="keyPress($event)" />
-<button class="relative pointer" @click="read()">Search</button>
-
-// <tbody>
-<tr v-for="(member, key) in members" :key="key">
-  <td>{{member.name}}</td>
-  <td>{{member.age}}</td>
-  <td>{{moment(member.createdDate).format('YYYY-MM-DD HH:mm')}}</td>
-</tr>
+<template>
+  <div>
+    <h3>Search</h3>
+    <hr class="d-block" />
+    <div>
+      <input type="text" placeholder="Name" v-model="member.name" @keyup="keyUp($event)" />
+      <button @click="searchRead()">Search</button>
+    </div>
+    <hr class="d-block" />
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(member, key) in members" :key="key">
+            <td>{{member.name}}</td>
+            <td>{{member.age}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>
 ```
 ```js
-import { mapState } from 'vuex'
-import * as types from '../../../shared/stores/types'
-import moment from 'moment'
-
 export default {
   computed: {
-    ...mapState({
-      member: state => state.search.member,
-      members: state => state.search.members
-    }),
-    moment() {
-      return moment
+    members() {
+      return this.$store.state.members.members
+    },
+    member() {
+      return this.$store.state.members.member
     }
   },
   methods: {
-    read() {
-      this.$store.dispatch(types.SEARCH_READ)
-    },
-    keyPress(e) {
-      if (e.charCode === 13) {
-        this.read()
+    keyUp($event) {
+      if ($event.key === 'Enter') {
+        this.searchRead()
       }
+    },
+    searchRead() {
+      this.$store.dispatch('searchRead', this.member.name)
     }
   },
   created() {
     this.member.name = ''
-    this.$store.dispatch(types.SEARCH_READ)
+    this.$store.dispatch('searchRead', '')
   }
 }
 ```
