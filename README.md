@@ -412,7 +412,7 @@ src/components/container/Nav.vue (li 태그 부분 덮어 씌우기)
 
 **여기 까지가 Markup 개발자 분들이 할일 입니다.**
 
-## Members Conpenent Markup
+## Members Compenent Markup
 src/components/container/contents/Members.vue
 ```html
 <template>
@@ -504,7 +504,7 @@ vue add @vue/eslint
 Error prevention only > Lint on save
 ``` -->
 
-## Members Conpenent Store inject
+## Members Compenent Store inject
 src/components/container/contents/Members.vue (32줄)
 ```diff
 - <input type="text" placeholder="Name" />
@@ -747,7 +747,7 @@ src/store/moduleMembers.js
       })
 ```
 
-## Search Conpenent Markup
+## Search Compenent Markup
 
 src/components/container/contents/Search.vue
 ```html
@@ -829,7 +829,7 @@ import { searchModule } from './modules/searchModule'
 search: searchModule
 ```
 
-## Search Conpenent Store inject
+## Search Compenent Store inject
 src/components/container/contents/Search.vue
 ```html
 <input type="text" placeholder="Name" v-model="member.name" @keypress="keyPress($event)" />
@@ -874,7 +874,7 @@ export default {
 }
 ```
 
-## Search Conpenent 파라미터 변경과 새로고침 적용
+## Search Compenent 파라미터 변경과 새로고침 적용
 src/components/container/contents/Search.vue
 ```js
 // export default {
