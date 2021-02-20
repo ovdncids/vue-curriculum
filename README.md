@@ -68,7 +68,7 @@ nvm alias default 14.15.5
 ## Vue CLI
 https://kr.vuejs.org/v2/guide/index.html
 
-https://cli.vuejs.org/guide
+https://cli.vuejs.org/guide/installation.html
 ```sh
 # Vue CLI 설치
 npm install -g @vue/cli
@@ -295,6 +295,7 @@ Header.vue, Nav.vue, Contents.vue, Footer.vue 이렇게 Component 별로 파일�
 
 src/App.vue
 ```html
+<!-- 가장 아래에 추가 -->
 <script>
 import Header from './components/Header.vue'
 import Nav from './components/container/Nav.vue'
@@ -324,6 +325,32 @@ export default {
 </script>
 ```
 
+src/App.vue
+```diff
+- <header>
+-  <h1>Vue.js study</h1>
+- </header>
++ <Header></Header>
+
+- <nav class="nav">
+-   <ul>
+-     <li><h2>Members</h2></li>
+-     <li><h2>Search</h2></li>
+-   </ul>
+- </nav>
++ <Nav></Nav>
+
+- <div>
+-   <h3>Members</h3>
+-   <p>Contents</p>
+- </div>
++ <Contents></Contents>
+
+- <footer>Copyright</footer>
++ <Footer></Footer>
+```
+
+
 ## v-show, v-if, props
 src/App.vue
 ```html
@@ -347,13 +374,15 @@ export default {
   }
 }
 ```
+**props는 부모 Component에서 자식 Component로 값을 전달 한다**
 
 ## Vue router
 src/App.vue (Contents 태그를 router-view 태그로 변경)
 ```diff
 <template>
-- <Contents></Contents>
-+ <router-view></router-view>
+  <section class="contents">
+-   <Contents></Contents>
++   <router-view></router-view>
 
 <script>
 - import Contents from './components/container/Contents.vue'
@@ -431,7 +460,10 @@ export const moduleMembers = {
   },
   actions: {
     membersCreate(thisStore) {
-      thisStore.state.members.push(thisStore.state.member)
+      thisStore.state.members.push({
+        name: thisStore.state.member.name,
+        age: thisStore.state.member.age
+      })
       console.log('Done membersCreate', moduleMembers.state.members)
     }
   }
@@ -651,7 +683,10 @@ import axios from 'axios'
 ```diff
   actions: {
     membersCreate(thisStore) {
--     thisStore.state.members.push(thisStore.state.member)
+-     thisStore.state.members.push({
+-       name: thisStore.state.member.name,
+-       age: thisStore.state.member.age
+-     })
 -     console.log('Done membersCreate', moduleMembers.state.members)
 ```
 ```js
@@ -719,39 +754,6 @@ src/store/moduleMembers.js
       }).catch(function(error) {
         thisStore.dispatch('axiosError', error)
       })
-```
-
-## Search Component Markup
-
-src/components/container/contents/Search.vue
-```html
-<div>
-  <h3>Search</h3>
-  <hr class="d-block" />
-  <div>
-    <input type="text" />
-    <button>Search</button>
-  </div>
-  <hr class="d-block" />
-  <div>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Created Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>홍길동</td>
-          <td>20</td>
-          <td>2018-10-04</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
 ```
 
 ## Search Store 만들기
