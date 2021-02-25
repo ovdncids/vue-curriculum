@@ -186,7 +186,7 @@ import "@/assets/scss/App.scss"
 ```
 
 ## Vue Component 만들기
-Header.vue, Nav.vue, Contents.vue, Footer.vue 이렇게 Component 별로 파일을 나눈다.
+Header.vue, Nav.vue, Footer.vue 이렇게 Component 별로 파일을 나눈다.
 
 src/App.vue
 ```html
@@ -264,7 +264,7 @@ export default {
 **props는 부모 Component에서 자식 Component로 값을 전달 한다**
 
 ## Vue router
-src/App.vue (Contents 태그를 router-view 태그로 변경)
+src/App.vue (div 태그를 router-view 태그로 변경)
 ```diff
 <template>
   <section class="contents">
@@ -284,6 +284,8 @@ src/components/contents/Members.vue
   </div>
 </template>
 ```
+
+src/components/contents/Search.vue (동일)
 
 src/router/index.js (3줄 부터 21줄 까지 덮어 씌우기)
 ```diff
