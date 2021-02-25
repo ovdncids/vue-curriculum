@@ -645,7 +645,7 @@ src/store/moduleMembers.js
 ```
 
 ## Search Store 만들기
-src/shared/stores/modules/moduleSearch.js
+src/store/moduleSearch.js
 ```js
 import axios from 'axios'
 
