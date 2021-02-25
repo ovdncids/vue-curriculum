@@ -43,7 +43,7 @@ nvm uninstall 14.15.5
 # 해당 버전을 사용 한다.
 nvm use 14.15.5
 
-# 기본 버전 변경 하기
+# 기본 버전 변경 한다.
 nvm alias default 14.15.5
 ```
 
@@ -358,7 +358,7 @@ export const moduleMembers = {
 }
 ```
 
-**moduleMembers.js를 Store에 등록하기**
+**moduleMembers.js를 Store에 등록**
 
 src/store/index.js
 ```diff
@@ -664,7 +664,7 @@ export const moduleSearch = {
 }
 ```
 
-**moduleSearch.js를 Store에 등록하기**
+**moduleSearch.js를 Store에 등록**
 
 src/store/index.js
 ```diff
@@ -767,13 +767,13 @@ module.exports = {
 }
 ```
 
-모든 파일 수정 하기
+모든 파일 수정
 ```diff
 - http://localhost:3100/api
 + /api
 ```
 
-당황 하지 말고 다시 실행 하기
+당황 하지 말고 다시 실행
 ```sh
 npm run serve
 ```
