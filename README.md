@@ -193,15 +193,13 @@ src/App.vue
 <!-- 가장 아래에 추가 -->
 <script>
 import Header from './components/Header.vue'
-import Nav from './components/container/Nav.vue'
-import Contents from './components/container/Contents.vue'
+import Nav from './components/Nav.vue'
 import Footer from './components/Footer.vue'
 
 export default {
   components: {
     Header,
     Nav,
-    Contents,
     Footer
   }
 }
@@ -234,12 +232,6 @@ src/App.vue
 -   </ul>
 - </nav>
 + <Nav></Nav>
-
-- <div>
--   <h3>Members</h3>
--   <p>Contents</p>
-- </div>
-+ <Contents></Contents>
 
 - <footer>Copyright</footer>
 + <Footer></Footer>
@@ -276,24 +268,23 @@ src/App.vue (Contents 태그를 router-view 태그로 변경)
 ```diff
 <template>
   <section class="contents">
--   <Contents></Contents>
+-   <div>
+-     <h3>Members</h3>
+-     <p>Contents</p>
+-   </div>
 +   <router-view></router-view>
-
-<script>
-- import Contents from './components/container/Contents.vue'
-
-export default {
-  components: {
--   Contents,
 ```
 
-src/components/container/
-```diff
-- Contents.vue
-
-+ contents/Members.vue
-+ contents/Search.vue
+src/components/contents/Members.vue
+```html
+<template>
+  <div>
+    <h3>Members</h3>
+    <p>Contents</p>
+  </div>
+</template>
 ```
+
 src/router/index.js (3줄 부터 21줄 까지 덮어 씌우기)
 ```diff
 - import Home from '../views/Home.vue'
@@ -301,8 +292,8 @@ src/router/index.js (3줄 부터 21줄 까지 덮어 씌우기)
 - ]
 ```
 ```js
-import Members from '../components/container/contents/Members.vue'
-import Search from '../components/container/contents/Search.vue'
+import Members from '../components/contents/Members.vue'
+import Search from '../components/contents/Search.vue'
 
 Vue.use(VueRouter)
 
@@ -328,7 +319,7 @@ new Vue({
   router,
 ```
 
-src/components/container/Nav.vue (li 태그 부분 덮어 씌우기)
+src/components/Nav.vue (li 태그 부분 덮어 씌우기)
 ```html
 <li><h2><router-link :to="{name: 'Members'}">Members</router-link></h2></li>
 <li><h2><router-link :to="{path: '/search'}">Search</router-link></h2></li>
@@ -377,7 +368,7 @@ export default new Vuex.Store({
 ```
 
 ## Members Component Store inject
-src/components/container/contents/Members.vue
+src/components/contents/Members.vue
 ```html
 <template>
   <div>
@@ -465,7 +456,7 @@ src/store/moduleMembers.js
     }
 ```
 
-src/components/container/contents/Members.vue (17줄)
+src/components/contents/Members.vue (17줄)
 ```diff
 - <tr>
 -  <td>홍길동</td>
@@ -496,7 +487,7 @@ src/store/moduleMembers.js
     }
 ```
 
-src/components/container/contents/Members.vue (18줄)
+src/components/contents/Members.vue (18줄)
 ```diff
 - <td>{{member.name}}</td>
 - <td>{{member.age}}</td>
@@ -530,7 +521,7 @@ src/store/moduleMembers.js
     }
 ```
 
-src/components/container/contents/Members.vue (24줄)
+src/components/contents/Members.vue (24줄)
 ```diff
 - <button>Delete</button>
 ```
@@ -683,7 +674,7 @@ export default new Vuex.Store({
 ```
 
 ## Search Component Store inject
-src/components/container/contents/Search.vue
+src/components/contents/Search.vue
 ```html
 <template>
   <div>
@@ -740,7 +731,7 @@ export default {
 ```
 
 ## Search Component 파라미터 변경과 새로고침 적용
-src/components/container/contents/Search.vue
+src/components/contents/Search.vue
 ```js
 export default {
   watch: {
