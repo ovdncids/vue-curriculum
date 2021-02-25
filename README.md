@@ -4,33 +4,12 @@
 https://nodejs.org
 
 ## NVM (Node Version Manager)
-Node.js 설치 버전을 관리하는 프로그램. 심볼릭 링크를 이용하여 Node.js 버전을 그때 그때 변경한다.
-Node.js 버전 별로 자유롭게 설치, 이동, 삭제 가능하다. 현재는 v8 이상이 주류를 이룬다.
+Node.js 버전을 관리하는 프로그램, 어느 버전이든 설치, 변경, 삭제 가능하다.
 
-<!-- **Mac OS Node 삭제 방법**: https://gomugom.github.io/how-to-remove-node-from-macos/ -->
-
-<!-- **VSCode에서 터미널 호출시 버전을 못 찾을 때**: https://github.com/Microsoft/vscode-docs/blob/master/docs/editor/integrated-terminal.md#why-is-nvm-complaining-about-a-prefix-option-when-the-integrated-terminal-is-launched
-```sh
-# nvm is not compatible with the npm config "prefix" option: currently set to "/usr/local"
-# Run `npm config delete prefix` or `nvm use --delete-prefix v8.12.0 --silent` to unset it.
-## nvm 설치 전에 npm이 설치되어서 문제가 발생 한다.
-ls -la /usr/local/bin | grep npm
-rm -R /usr/local/bin/npm /usr/local/lib/node_modules/npm/bin/npm-cli.js
-``` -->
-
-<!-- **nvm 삭제 방법**:
-```sh
-rm -rf ~/.nvm
-rm -rf ~/.npm
-rm -rf ~/.bower
-``` -->
-
-**Mac OS**
-
+<details><summary>Mac OS</summary>
 https://github.com/nvm-sh/nvm
 
 https://gist.github.com/falsy/8aa42ae311a9adb50e2ca7d8702c9af1
-
 ```sh
 # 설치
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
@@ -45,8 +24,11 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 # ~/.bash_profile 재 실행 시키기
 source ~/.bash_profile
 ```
+</details>
 
-**Windows**: https://github.com/coreybutler/nvm-windows/releases
+Windows
+
+https://github.com/coreybutler/nvm-windows/releases
 
 ```sh
 # 설치 된 node.js 리스트를 본다.
@@ -87,92 +69,12 @@ serve -s dist
 npm run serve
 ```
 
-<!-- ## Visual Studio Code
-**Tab 스페이스 2칸으로 설정**: Preferences > 검색 > editor.detectIndent
-
-https://stackoverflow.com/questions/29972396/how-to-set-tab-space-style
-
-기본 텝 사이즈를 2칸으로 변경한다.
-```json
-"editor.tabSize": 2
-```
-
-해당 파일의 텝 사이즈를 무시하고 기본 텝 사이즈로 설정한다.
-```json
-"editor.detectIndentation": false
-``` -->
-
 ## GIT
 소스 관리를 위해 사용한다. 어느 파일이 언제 어떻게 변경 되었는지 쉽게 볼 수 있다.
 
 **GIT 설치**
 
 **VSCode 확장 Git Graph 설치**
-
-<!-- ## 현재 문서 Git clone 하기
-
-git clone https://github.com/ovdncids/vue-curriculum.git
-
-## Git .gitignore
-```sh
-# npm or yarn
-package-lock.json
-yarn.lock
-
-# .idea
-.idea
-```
-
-**lock 파일**: 가끔 이 파일 때문에 클라이언트와 서버 사이에 버전이 안 맞아서 오류가 발생한다.
-용량도 크고 npm install 할때 마다 생성되는 파일이니 .gitignore 목록에 넣는다.
-
-**package-lock.json, yarn.lock 파일 삭제**
-
-**Git push**
-```sh
-git push
-```
-
-**commit 이름 수정**
-```sh
-git commit --amend -m ""
-```
-
-**commit 취소**
-```sh
-git reset HEAD~
-``` -->
-
-<!-- **첫 commit 취소**
-```sh
-git update-ref -d HEAD
-``` -->
-
-<!-- **이전 commit과 합치기**
-```sh
-git rebase -i HEAD~2
-  # 2번째 줄 pick을 fixup으로 바꾸고 저장
-``` -->
-
-<!-- **이전으로 돌아가 수정 하기**
-```sh
-# 첫 commit 수정
-git rebase -i --root $tip
-# 이후 commit 수정
-git rebase -i HEAD~2
-  pick -> edit 수정
-원하는 파일 수정
-git add .
-git rebase --continue
-``` -->
-
-<!-- ## Sass 설치
-css를 프로그램화 하여 색상 테마를 변수에 넣을 수 있고, 반복 부분을 저장하고 불러 올 수 있다. 이름은 Sass지만 파일명은 scss이다.
-
-https://sass-guidelin.es/ko/
-```sh
-npm install -D sass-loader node-sass
-``` -->
 
 ## 필요 없는 파일 지우기
 ```diff
