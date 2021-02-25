@@ -185,13 +185,6 @@ src/main.js (App.scss 부르기)
 import "@/assets/scss/App.scss"
 ```
 
-<!-- ## CSS Flex
-https://opentutorials.org/course/2418/13526
-
-https://www.youtube.com/watch?v=eprXmC_j9A4
-
-**현재 브라우저 상황**: YouTube IE11 부터 지원. IE11 부터 Flex 사용 가능. -->
-
 ## Vue Component 만들기
 Header.vue, Nav.vue, Contents.vue, Footer.vue 이렇게 Component 별로 파일을 나눈다.
 
