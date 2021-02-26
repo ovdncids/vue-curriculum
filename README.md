@@ -321,6 +321,8 @@ new Vue({
   router,
 ```
 
+**주소 창에서 router 바꾸어 보기**
+
 src/components/Nav.vue (li 태그 부분 덮어 씌우기)
 ```html
 <li><h2><router-link :to="{name: 'Members'}">Members</router-link></h2></li>
