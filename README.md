@@ -206,10 +206,12 @@ export default {
 </script>
 ```
 
-기본 .vue 파일
+src/components/Header.vue
 ```html
 <template>
-  <div></div>
+  <header>
+    <h1>Vue.js study</h1>
+  </header>
 </template>
 
 <script>
