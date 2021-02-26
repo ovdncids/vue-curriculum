@@ -373,7 +373,7 @@ export default new Vuex.Store({
 
 ## Members Component Store inject
 src/components/contents/Members.vue
-```html
+```js
 <template>
   <div>
     <h3>Members</h3>
@@ -410,9 +410,8 @@ src/components/contents/Members.vue
     </div>
   </div>
 </template>
-```
 
-```js
+<script>
 export default {
   computed: {
     member() {
@@ -429,6 +428,7 @@ export default {
     this.member.age = ''
   }
 }
+</script>
 ```
 
 **computed, methods 차이 설명**
@@ -679,7 +679,7 @@ export default new Vuex.Store({
 
 ## Search Component Store inject
 src/components/contents/Search.vue
-```html
+```js
 <template>
   <div>
     <h3>Search</h3>
@@ -707,8 +707,8 @@ src/components/contents/Search.vue
     </div>
   </div>
 </template>
-```
-```js
+
+<script>
 export default {
   data() {
     return {
@@ -732,6 +732,7 @@ export default {
     this.$store.dispatch('searchRead', this.search)
   }
 }
+</script>
 ```
 
 ## Search Component 쿼리스트링 변경과 새로고침 적용
