@@ -334,7 +334,7 @@ src/components/Nav.vue (li 태그 부분 덮어 씌우기)
 ## Members Store 만들기
 **Store 개념 설명**
 
-Component가 사용하는 글로벌 함수 또는 변수라고 생각하면 쉽다, store 값이 변하면 해당 값을 바라 보는 모든 Component가 수정 된다.
+Component가 사용하는 글로벌 함수 또는 변수라고 생각하면 쉽다, state 값이 변하면 해당 값을 바라 보는 모든 Component가 수정 된다.
 
 src/store/moduleMembers.js
 ```js
