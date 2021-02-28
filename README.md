@@ -387,8 +387,7 @@ src/components/contents/Members.vue
           <tr>
             <th>Name</th>
             <th>Age</th>
-            <th>Update</th>
-            <th>Delete</th>
+            <th>Modify</th>
           </tr>
         </thead>
         <tbody>
