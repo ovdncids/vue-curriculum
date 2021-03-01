@@ -444,9 +444,10 @@ package.json
 ```diff
 "eslintConfig": {
   "rules": {
-+      "no-debugger": false
++      "no-debugger": 1
     }
 }
+// 0 = off, 1 = warn, 2 = error
 ```
 
 ## Members Store CRUD
