@@ -741,7 +741,7 @@ src/components/contents/Search.vue
 ```js
 export default {
   watch: {
-    '$route.query': function (query, beforeQuery) {
+    '$route.query': function(query, beforeQuery) {
       console.log(query, beforeQuery)
       this.search = query.search || ''
       this.$store.dispatch('searchRead', this.search)
