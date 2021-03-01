@@ -438,6 +438,16 @@ export default {
 ```js
 debugger
 ```
+**Unexpected 'debugger' statement 발생할 경우**
+
+package.json
+```diff
+"eslintConfig": {
+  "rules": {
++      "no-debugger": false
+    }
+}
+```
 
 ## Members Store CRUD
 ### Read
