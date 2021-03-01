@@ -758,7 +758,7 @@ export default {
 ```
 
 ## Proxy 설정
-/vue.config.js (파일 생성)
+vue.config.js (파일 생성)
 ```js
 module.exports = {
   devServer: {
