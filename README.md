@@ -168,6 +168,12 @@ h1, footer {
       list-style: none;
       margin: 0.5rem 0 0.5rem 0;
       padding: 0;
+      a {
+        text-decoration: none;
+        &.active {
+          color: white;
+        }
+      }
       h2 {
         margin: 0;
         padding: 0.5rem;
@@ -327,8 +333,8 @@ new Vue({
 
 src/components/Nav.vue (li 태그 부분 덮어 씌우기)
 ```html
-<li><h2><router-link :to="{name: 'Members'}">Members</router-link></h2></li>
-<li><h2><router-link :to="{path: '/search'}">Search</router-link></h2></li>
+<li><h2><router-link :to="{name: 'Members'}" active-class="active">Members</router-link></h2></li>
+<li><h2><router-link :to="{path: '/search'}" active-class="active">Search</router-link></h2></li>
 ```
 
 **여기 까지가 Markup 개발자 분들이 할일 입니다.**
