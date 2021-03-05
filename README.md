@@ -219,11 +219,6 @@ src/components/Header.vue
     <h1>Vue.js study</h1>
   </header>
 </template>
-
-<script>
-export default {
-}
-</script>
 ```
 
 src/App.vue
@@ -257,10 +252,13 @@ src/App.vue
 ```
 
 src/components/Footer.vue
-```html
-<footer>{{title}}</footer>
+```diff
+- <footer>Copyright</footer>
++ <footer>{{title}}</footer>
 ```
 ```js
+<!-- 가장 아래에 추가 -->
+<script>
 export default {
   props: {
     title: {
@@ -268,6 +266,7 @@ export default {
     }
   }
 }
+</script>
 ```
 **props는 부모 Component에서 자식 Component로 값을 전달 한다**
 
@@ -478,7 +477,7 @@ src/store/moduleMembers.js
     }
 ```
 
-src/components/contents/Members.vue (17줄)
+src/components/contents/Members.vue (16줄)
 ```diff
 - <tr>
 -  <td>홍길동</td>
@@ -509,7 +508,7 @@ src/store/moduleMembers.js
     }
 ```
 
-src/components/contents/Members.vue (18줄)
+src/components/contents/Members.vue (17줄)
 ```diff
 - <td>{{member.name}}</td>
 - <td>{{member.age}}</td>
@@ -543,7 +542,7 @@ src/store/moduleMembers.js
     }
 ```
 
-src/components/contents/Members.vue (24줄)
+src/components/contents/Members.vue (21줄)
 ```diff
 - <button>Delete</button>
 ```
