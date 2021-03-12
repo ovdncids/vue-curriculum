@@ -449,14 +449,13 @@ package.json
 ```diff
 "eslintConfig": {
   "rules": {
-+      "no-debugger": 1
-    }
++   "no-debugger": 1
+  }
 }
 // 0 = off, 1 = warn, 2 = error
 ```
 
 **또는**
-
 ```js
 debugger // eslint-disable-line no-debugger
 ```
