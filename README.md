@@ -240,7 +240,6 @@ src/App.vue
 + <Footer></Footer>
 ```
 
-
 ## v-show, v-if, props
 src/App.vue
 ```html
