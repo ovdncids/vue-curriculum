@@ -706,7 +706,7 @@ src/components/contents/Search.vue
     <hr class="d-block" />
     <div>
       <form @submit.prevent="searchRead()">
-        <input type="text" placeholder="Search" v-model="search" />
+        <input type="text" placeholder="Search" v-model="q" />
         <button>Search</button>
       </form>
     </div>
@@ -734,7 +734,7 @@ src/components/contents/Search.vue
 export default {
   data() {
     return {
-      search: ''
+      q: ''
     }
   },
   computed: {
@@ -744,11 +744,11 @@ export default {
   },
   methods: {
     searchRead() {
-      this.$store.dispatch('searchRead', this.search)
+      this.$store.dispatch('searchRead', this.q)
     }
   },
   created() {
-    this.$store.dispatch('searchRead', this.search)
+    this.$store.dispatch('searchRead', this.q)
   }
 }
 </script>
@@ -761,8 +761,8 @@ export default {
   watch: {
     '$route.query': function(query, beforeQuery) {
       console.log(query, beforeQuery)
-      this.search = query.search || ''
-      this.$store.dispatch('searchRead', this.search)
+      this.q = query.q || ''
+      this.$store.dispatch('searchRead', this.q)
     }
   }
 ```
@@ -770,9 +770,9 @@ export default {
   methods: {
     searchRead() {
 -     this.$store.dispatch('searchRead', this.search)
-+     this.$router.push({ name: 'Search', query: { search: this.search }})
++     this.$router.push({ name: 'Search', query: { q: this.q }})
   created() {
-+   this.search = this.$route.query.search || ''
++   this.q = this.$route.query.q || ''
 ```
 
 ## Proxy 설정
