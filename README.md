@@ -673,8 +673,8 @@ import axios from 'axios'
 
 export const moduleSearch = {
   actions: {
-    searchRead(thisStore, search) {
-      const url = 'http://localhost:3100/api/v1/search?search=' + search
+    searchRead(thisStore, q) {
+      const url = 'http://localhost:3100/api/v1/search?q=' + q
       axios.get(url).then(function(response) {
         console.log('Done searchRead', response)
         thisStore.commit('membersRead', response.data.members)
@@ -705,8 +705,10 @@ src/components/contents/Search.vue
     <h3>Search</h3>
     <hr class="d-block" />
     <div>
-      <input type="text" placeholder="Search" v-model="search" @keyup="keyUp($event)" />
-      <button @click="searchRead()">Search</button>
+      <form @submit.prevent="searchRead()">
+        <input type="text" placeholder="Search" v-model="search" />
+        <button>Search</button>
+      </form>
     </div>
     <hr class="d-block" />
     <div>
@@ -741,9 +743,6 @@ export default {
     }
   },
   methods: {
-    keyUp($event) {
-      if ($event.key === 'Enter') this.searchRead()
-    },
     searchRead() {
       this.$store.dispatch('searchRead', this.search)
     }
