@@ -769,7 +769,7 @@ export default {
 ```diff
   methods: {
     searchRead() {
--     this.$store.dispatch('searchRead', this.search)
+-     this.$store.dispatch('searchRead', this.q)
 +     this.$router.push({ name: 'Search', query: { q: this.q }})
   created() {
 +   this.q = this.$route.query.q || ''
