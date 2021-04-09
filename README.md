@@ -163,6 +163,7 @@ input[type=text] {
 }
 .nav {
   min-height: 300px;
+  height: 100%;
   background-color: #4285F4;
 }
 .nav ul {
