@@ -802,3 +802,4 @@ npm run serve
 ```
 
 # 수고 하셨습니다.
+* [데모](https://ovdncids.github.io/vue-curriculum/demo)
