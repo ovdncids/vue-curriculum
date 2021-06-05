@@ -190,7 +190,7 @@ input[type=text] {
 
 src/main.js (App.scss 부르기)
 ```js
-import "@/assets/scss/App.scss"
+import '@/assets/scss/App.scss'
 ```
 
 ## Vue Component 만들기
