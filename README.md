@@ -372,7 +372,7 @@ src/store/index.js
 
 export default new Vuex.Store({
   modules: {
-+   members: moduleMembers
++   $members: moduleMembers
 ```
 
 ## Members Component Store inject
@@ -418,7 +418,7 @@ src/components/contents/Members.vue
 export default {
   computed: {
     member() {
-      return this.$store.state.members.member
+      return this.$store.state.$members.member
     }
   },
   methods: {
@@ -493,7 +493,7 @@ src/components/contents/Members.vue (16줄)
 export default {
   computed: {
     members() {
-      return this.$store.state.members.members
+      return this.$store.state.$members.members
     }
   created() {
     this.$store.dispatch('membersRead')
@@ -692,7 +692,7 @@ src/store/index.js
 
 export default new Vuex.Store({
   modules: {
-+   search: moduleSearch
++   $search: moduleSearch
 ```
 
 ## Search Component Store inject
@@ -737,7 +737,7 @@ export default {
   },
   computed: {
     members() {
-      return this.$store.state.members.members
+      return this.$store.state.$members.members
     }
   },
   methods: {
