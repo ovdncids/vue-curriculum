@@ -238,7 +238,7 @@ src/App.vue
 + <Footer></Footer>
 ```
 
-## v-show, v-if, props
+### v-show, v-if, props
 src/App.vue
 ```html
 <Header v-show="false"></Header>
@@ -266,6 +266,29 @@ export default {
 </script>
 ```
 **props는 부모 Component에서 자식 Component로 값을 전달 한다**
+
+<!--
+### emit (자식 Component에서 부모 Component의 함수 호출)
+src/App.vue
+```js
+<Footer @callParentMethod="parentMethod"></Footer>
+
+<script>
+export default {
+  methods: {
+    parentMethod(parameter1) {
+      console.log(parameter1, this)
+    }
+  }
+}
+</script>
+```
+-->
+
+src/components/Footer.vue
+```js
+<footer @click="$emit('callParentMethod', 'argument1')">{{title}}</footer>
+```
 
 ## Vue router
 src/App.vue (div 태그를 router-view 태그로 변경)
