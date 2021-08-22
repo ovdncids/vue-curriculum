@@ -283,12 +283,12 @@ export default {
 }
 </script>
 ```
--->
 
 src/components/Footer.vue
 ```js
 <footer @click="$emit('callParentMethod', 'argument1')">{{title}}</footer>
 ```
+-->
 
 ## Vue router
 src/App.vue (div 태그를 router-view 태그로 변경)
