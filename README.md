@@ -662,7 +662,7 @@ src/store/moduleMembers.js
 -     console.log('Done membersRead', moduleMembers.state.members)
 ```
 ```js
-      axios.patch('http://localhost:3100/api/v1/members', memberUpdate).then(function(response) {
+      axios.patch('http://localhost:3100/api/v1/members/' + memberUpdate.index, memberUpdate.member).then(function(response) {
         console.log('Done membersUpdate', response)
         thisStore.dispatch('membersRead')
       }).catch(function(error) {
