@@ -165,3 +165,102 @@ input[type=text] {
   min-width: 100px;
 }
 ```
+
+## Members Store
+### Read
+store/members.js
+```js
+export const state = () => ({
+  members: null
+})
+
+export const mutations = {
+  membersRead(state, members) {
+    state.members = members
+  }
+}
+
+export const actions = {
+  membersRead({ commit }, context) {
+    return context.$axios.get('http://localhost:8080/api/v1/members').then(response => {
+      commit('membersRead', response.data.members)
+    })
+  }
+}
+```
+
+#### Missing space before function parentheses space-before-function-paren 발생할 경우
+.eslintrc.js
+```js
+rules: {
+  'space-before-function-paren': ['error', 'never']
+}
+```
+#### Expected parentheses around arrow function argument having a body with curly braces  arrow-parens 발생할 경우
+rules: {
+  'arrow-parens': 0
+}
+
+pages/members.vue
+```vue
+<template>
+  <div>
+    <h3>Members</h3>
+    <hr class="d-block">
+    <div>
+      <h4>Read</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Modify</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(member, index) in members" :key="index">
+            <td>{{ member.name }}</td>
+            <td>{{ member.age }}</td>
+            <td>
+              <button>Update</button>
+              <button>Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr class="d-block">
+    <div>
+      <h4>Create</h4>
+      <input type="text" placeholder="Name">
+      <input type="text" placeholder="Age">
+      <button>Create</button>
+    </div>
+  </div>
+</template>
+
+<script>
+import Vue from 'vue'
+
+export default Vue.extend({
+  asyncData(context) {
+    return context.store.dispatch('members/membersRead', context)
+  },
+  computed: {
+    members() {
+      return this.$store.state.members.members
+    }
+  },
+  created() {
+    debugger
+    console.log(this.$store.state.members.members)
+    if (this.$store.state.members.members === null) {
+      this.$store.dispatch('members/membersRead', this)
+    }
+  },
+  destroyed() {
+    this.$store.commit('members/membersRead', null)
+  }
+})
+</script>
+```
