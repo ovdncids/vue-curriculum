@@ -6,4 +6,162 @@
 ```sh
 # Nuxt 프로젝트 생성
 npx create-nuxt-app nuxt-study
+  Project name: nuxt-study
+  Programming language: JavaScript
+  Package manager: Npm
+  UI framework: None
+  Nuxt.js modules: Axios - Promise based HTTP client <-선택
+  Linting tools: ESLint
+  Testing framework: None or Jest
+  Rendering mode: Universal (SSR / SSG)
+  Deployment target: Server (Node.js hosting)
+  Development tools: jsconfig.json (Recommended for VS Code if you're not using typescript)
+  Continuous integration: None
+  Version control system: Git
+
+cd nuxt-study
+code .
+
+# 결과물을 .nuxt 경로에 build 한다.
+npm run build
+# build된 .nuxt 경로를 로컬 서버로 띄운다.
+npm run start
+
+# 로컬 개발 서버를 띄운다.
+npm run dev
+```
+
+## Markup
+layouts/default.vue
+```vue
+<template>
+  <div>
+    <layout-header />
+    <hr>
+    <div class="container">
+      <layout-nav />
+      <hr>
+      <section class="contents">
+        <nuxt />
+      </section>
+      <hr>
+    </div>
+    <layout-footer>Copyright</layout-footer>
+  </div>
+</template>
+
+<script>
+import Vue from 'vue'
+import LayoutHeader from './header.vue'
+import LayoutNav from './nav.vue'
+import LayoutFooter from './footer.vue'
+import '../static/style/index.css'
+
+export default Vue.extend({
+  components: {
+    LayoutHeader,
+    LayoutNav,
+    LayoutFooter
+  }
+})
+</script>
+```
+
+layouts/header.vue
+```vue
+<template>
+  <header>
+    <h1>Vue.js study</h1>
+  </header>
+</template>
+```
+
+layouts/nav.vue
+```vue
+<template>
+  <nav class="nav">
+    <ul>
+      <li>
+        <h2><nuxt-link to="/">Home</nuxt-link></h2>
+      </li>
+      <li>
+        <h2><nuxt-link to="/members">Members</nuxt-link></h2>
+      </li>
+      <li>
+        <h2><nuxt-link to="/search">Search</nuxt-link></h2>
+      </li>
+    </ul>
+  </nav>
+</template>
+```
+
+layouts/footer.vue
+```vue
+<template>
+  <footer>Copyright</footer>
+</template>
+```
+
+static/style/index.css
+```css
+* {
+  margin: 0;
+  font-family: -apple-system,BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+a:link, a:visited {
+  text-decoration: none;
+  color: black;
+}
+a.active,
+a.nuxt-link-exact-active {
+  color: white;
+}
+h1, footer, .nav ul {
+  padding: 0.5rem;
+}
+h4, li {
+  margin: 0.5rem 0;
+}
+hr {
+  display: none;
+  margin: 1rem 0;
+  border: 0;
+  border-top: 1px solid #ccc;
+}
+input[type=text] {
+  width: 120px;
+}
+
+.d-block {
+  display: block;
+}
+.container {
+  display: flex;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+.nav {
+  min-height: 300px;
+  background-color: #4285F4;
+}
+.nav ul {
+  list-style: none;
+}
+.contents {
+  flex: 1;
+  padding: 1rem;
+}
+
+.table-search {
+  border: 1px solid rgb(118, 118, 118);
+  border-collapse: collapse;
+  text-align: center;
+}
+.table-search th, .table-search td {
+  padding: 0.2rem;
+}
+.table-search td {
+  border-top: 1px solid rgb(118, 118, 118);
+  min-width: 100px;
+}
 ```
