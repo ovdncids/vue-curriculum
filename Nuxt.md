@@ -265,7 +265,7 @@ export default Vue.extend({
     debugger
     console.log(this.$store.state.members.members)
     if (this.$store.state.members.members === null) {
-      this.$store.dispatch('members/membersRead', this)
+      return this.$store.dispatch('members/membersRead', this)
     }
   },
   destroyed() {
@@ -274,3 +274,5 @@ export default Vue.extend({
 })
 </script>
 ```
+* ❕ `asyncData` 안에 `return`이 있다면 `SSR`에서 비동기 통신 완료 후, `CSR`의 created 함수가 실행된다. (따라서 `SEO`가 가능해 진다.)
+* 하지만 `asyncData`를 주석 처리하고 created 함수에서 비동기 통신 한다면, HTML이 그려진 상황에서 통신을 하게 되므로 `SEO`가 어려워진다.
