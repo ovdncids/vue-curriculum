@@ -280,7 +280,7 @@ export default Vue.extend({
 ### asyncData에 async, await 적용
 ```js
 async asyncData(context) {
-  // console.log(context.route.query);
+  // console.log(context.route.query, context.query);
   await context.store.dispatch('members/membersRead', context)
   await context.store.dispatch('members/membersRead', context)
   debugger
