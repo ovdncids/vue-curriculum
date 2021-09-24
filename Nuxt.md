@@ -11,7 +11,7 @@ npx create-nuxt-app nuxt-study
   Package manager: Npm
   UI framework: None
   Nuxt.js modules: Axios - Promise based HTTP client <-선택
-  Linting tools: ESLint
+  Linting tools: 선택 안함
   Testing framework: None or Jest
   Rendering mode: Universal (SSR / SSG)
   Deployment target: Server (Node.js hosting)
@@ -37,14 +37,14 @@ layouts/default.vue
 <template>
   <div>
     <layout-header />
-    <hr>
+    <hr />
     <div class="container">
       <layout-nav />
-      <hr>
+      <hr />
       <section class="contents">
         <nuxt />
       </section>
-      <hr>
+      <hr />
     </div>
     <layout-footer>Copyright</layout-footer>
   </div>
@@ -189,6 +189,7 @@ export const actions = {
 }
 ```
 
+<!--
 #### Missing space before function parentheses space-before-function-paren 발생할 경우
 .eslintrc.js
 ```js
@@ -197,16 +198,25 @@ rules: {
 }
 ```
 #### Expected parentheses around arrow function argument having a body with curly braces  arrow-parens 발생할 경우
+```js
 rules: {
   'arrow-parens': 0
 }
+```
+#### vue/mustache-interpolation-spacing
+```js
+rules: {
+  'vue/mustache-interpolation-spacing': ['error', 'never']
+}
+```
+-->
 
 pages/members.vue
 ```vue
 <template>
   <div>
     <h3>Members</h3>
-    <hr class="d-block">
+    <hr class="d-block" />
     <div>
       <h4>Read</h4>
       <table>
@@ -219,8 +229,8 @@ pages/members.vue
         </thead>
         <tbody>
           <tr v-for="(member, index) in members" :key="index">
-            <td>{{ member.name }}</td>
-            <td>{{ member.age }}</td>
+            <td>{{member.name}}</td>
+            <td>{{member.age}}</td>
             <td>
               <button>Update</button>
               <button>Delete</button>
@@ -229,11 +239,11 @@ pages/members.vue
         </tbody>
       </table>
     </div>
-    <hr class="d-block">
+    <hr class="d-block" />
     <div>
       <h4>Create</h4>
-      <input type="text" placeholder="Name">
-      <input type="text" placeholder="Age">
+      <input type="text" placeholder="Name" />
+      <input type="text" placeholder="Age" />
       <button>Create</button>
     </div>
   </div>
