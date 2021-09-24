@@ -182,7 +182,7 @@ export const mutations = {
 
 export const actions = {
   membersRead({ commit }, context) {
-    return context.$axios.get('http://localhost:8080/api/v1/members').then(response => {
+    return context.$axios.get('http://localhost:3100/api/v1/members').then(response => {
       commit('membersRead', response.data.members)
     })
   }
@@ -276,3 +276,14 @@ export default Vue.extend({
 ```
 * ❕ `asyncData` 안에 `return`이 있다면 `SSR`에서 비동기 통신 완료 후, `CSR`의 created 함수가 실행된다. (따라서 `SEO`가 가능해 진다.)
 * 하지만 `asyncData`를 주석 처리하고 created 함수에서 비동기 통신 한다면, HTML이 그려진 상황에서 통신을 하게 되므로 `SEO`가 어려워진다.
+
+### asyncData에 async, await 적용
+```js
+async asyncData(context) {
+  await context.store.dispatch('members/membersRead', context)
+  await context.store.dispatch('members/membersRead', context)
+  debugger
+}
+```
+* ❕ `SSR`에서 2번 비동기 통신 완료 후, `debugger`에 걸리게 된다.
+* `IE11`에서도 별도의 `Polyfill`없이 `async, await` 사용 가능 하다.
