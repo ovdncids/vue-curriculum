@@ -269,7 +269,7 @@ export default Vue.extend({
     }
   },
   destroyed() {
-    this.$store.commit('members/membersRead', null)
+    // this.$store.commit('members/membersRead', null)
   }
 })
 </script>
@@ -286,4 +286,6 @@ async asyncData(context) {
 }
 ```
 * ❕ `SSR`에서 2번 비동기 통신 완료 후, `debugger`에 걸리게 된다.
+* ❕ `Nav 메뉴`에서 router 이동 후 돌아 온다면, `CSR`쪽에서 `asyncData` 함수가 실행 된다.
 * `IE11`에서도 별도의 `Polyfill`없이 `async, await` 사용 가능 하다.
+* 결론: `created` 함수 말고 `asyncData` 함수에서 통신 하자.
