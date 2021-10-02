@@ -5,7 +5,7 @@ npm install moment
 ```
 
 src/App.vue
-```js
+```vue
 <div>
   <DatePicker :fromDates="fromDates"></DatePicker>
   {{fromDates}}
@@ -32,7 +32,7 @@ export default {
 ```
 
 src/components/DatePicker.vue
-```js
+```vue
 <template>
   <div>
     <input v-model="fromDates.startDate" @click="dpData.showDatePicker = !dpData.showDatePicker">
@@ -92,7 +92,7 @@ export default {
 ```
 
 src/components/Calendar.vue
-```js
+```vue
 <template>
   <div>
     {{currentYearMonth}}
