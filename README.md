@@ -60,6 +60,9 @@ npm install -g @vue/cli
 vue create vue-study
 ## Normal type without Test ([Vue 2] dart-sass, babel, router, vuex, eslint) 선택
 
+cd vue-study
+code .
+
 # VSCode로 해당 디렉토리 열기
 ## build
 npm run build
