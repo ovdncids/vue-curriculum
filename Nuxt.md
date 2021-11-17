@@ -290,3 +290,18 @@ async asyncData(context) {
 * ❕ `Nav 메뉴`에서 router 이동 후 돌아 온다면, `CSR`쪽에서 `asyncData` 함수가 실행 된다.
 * `IE11`에서도 별도의 `Polyfill`없이 `async, await` 사용 가능 하다.
 * 결론: `created` 함수 말고 `asyncData` 함수에서 통신 하자.
+
+```js
+async asyncData() {
+  const getMyCars = myCarService.getMyCars()
+  const getProducts = repairService.getProducts()
+  const getItems = repairService.getItems()
+  const [myCars, products, items] = await Promise.all([getMyCars, getProducts, getItems])
+  return {
+    myCars: myCars.myCars,
+    products,
+    items
+  }
+}
+```
+* ❕ `return`의 `{}` 부분이 `this(data)` 안으로 자동으로 들어가게 된다.
