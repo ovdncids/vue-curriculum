@@ -380,13 +380,6 @@ export const moduleMembers = {
   mutations: {
   },
   actions: {
-    membersCreate(thisStore) {
-      thisStore.state.members.push({
-        name: thisStore.state.member.name,
-        age: thisStore.state.member.age
-      })
-      console.log('Done membersCreate', moduleMembers.state.members)
-    }
   }
 }
 ```
@@ -402,7 +395,7 @@ export default new Vuex.Store({
 +   $members: moduleMembers
 ```
 
-## Members Component Store inject
+### Members Component Store inject
 src/components/contents/Members.vue
 ```js
 <template>
@@ -434,9 +427,9 @@ src/components/contents/Members.vue
     <hr class="d-block" />
     <div>
       <h4>Create</h4>
-      <input type="text" placeholder="Name" v-model="member.name" />
-      <input type="text" placeholder="Age" v-model="member.age" />
-      <button @click="membersCreate()">Create</button>
+      <input type="text" placeholder="Name" />
+      <input type="text" placeholder="Age" />
+      <button>Create</button>
     </div>
   </div>
 </template>
@@ -449,11 +442,9 @@ export default {
     }
   },
   methods: {
-    membersCreate() {
-      this.$store.dispatch('membersCreate')
-    }
   },
   created() {
+    console.log(this.member)
     this.member.name = ''
     this.member.age = ''
   }
@@ -484,6 +475,34 @@ debugger // eslint-disable-line no-debugger
 ```
 
 ## Members Store CRUD
+### Create
+src/store/moduleMembers.js
+```js
+  actions: {
+    membersCreate(thisStore) {
+      thisStore.state.members.push({
+        name: thisStore.state.member.name,
+        age: thisStore.state.member.age
+      })
+      console.log('Done membersCreate', moduleMembers.state.members)
+    }
+  }
+```
+
+src/components/contents/Members.vue
+```html
+<input type="text" placeholder="Name" v-model="member.name" />
+<input type="text" placeholder="Age" v-model="member.age" />
+<button @click="membersCreate()">Create</button>
+```
+```js
+  methods: {
+    membersCreate() {
+      this.$store.dispatch('membersCreate')
+    }
+  }
+```
+
 ### Read
 src/store/moduleMembers.js
 ```js
