@@ -479,12 +479,12 @@ debugger // eslint-disable-line no-debugger
 src/store/moduleMembers.js
 ```js
   actions: {
-    membersCreate(thisStore) {
+    membersCreate(thisStore, member) {
       thisStore.state.members.push({
-        name: thisStore.state.member.name,
-        age: thisStore.state.member.age
+        name: member.name,
+        age: member.age
       })
-      console.log('Done membersCreate', moduleMembers.state.members)
+      console.log('Done membersCreate', thisStore.state.members)
     }
   }
 ```
@@ -493,12 +493,12 @@ src/components/contents/Members.vue
 ```html
 <input type="text" placeholder="Name" v-model="member.name" />
 <input type="text" placeholder="Age" v-model="member.age" />
-<button @click="membersCreate()">Create</button>
+<button @click="membersCreate(member)">Create</button>
 ```
 ```js
   methods: {
-    membersCreate() {
-      this.$store.dispatch('membersCreate')
+    membersCreate(member) {
+      this.$store.dispatch('membersCreate', member)
     }
   }
 ```
@@ -510,6 +510,7 @@ src/store/moduleMembers.js
     membersRead(state, members) {
       state.members = members
     }
+  },
   actions: {
     membersRead(thisStore) {
       const members = [{
@@ -520,8 +521,9 @@ src/store/moduleMembers.js
         age: 16
       }]
       thisStore.commit('membersRead', members)
-      console.log('Done membersRead', moduleMembers.state.members)
+      console.log('Done membersRead', thisStore.state.members)
     }
+  }
 ```
 
 src/components/contents/Members.vue (16줄)
@@ -541,18 +543,21 @@ export default {
     members() {
       return this.$store.state.$members.members
     }
+  },
   created() {
     this.$store.dispatch('membersRead')
+  }
 ```
 
 ### Update
 src/store/moduleMembers.js
 ```js
   actions: {
-    membersUpdate(thisStore, memberUpdate) {
-      thisStore.state.members[memberUpdate.index] = memberUpdate.member
-      console.log('Done membersUpdate', moduleMembers.state.members)
+    membersUpdate(thisStore, index, member) {
+      thisStore.state.members[index] = member
+      console.log('Done membersUpdate', thisStore.state.members)
     }
+  }
 ```
 
 src/components/contents/Members.vue (17줄)
@@ -572,10 +577,7 @@ src/components/contents/Members.vue (17줄)
 export default {
   methods: {
     membersUpdate(index, member) {
-      this.$store.dispatch('membersUpdate', {
-        index: index,
-        member: member
-      })
+      this.$store.dispatch('membersUpdate', index, member)
     }
 ```
 
@@ -585,8 +587,9 @@ src/store/moduleMembers.js
   actions: {
     membersDelete(thisStore, index) {
       thisStore.state.members.splice(index, 1)
-      console.log('Done membersDelete', moduleMembers.state.members)
+      console.log('Done membersDelete', thisStore.state.members)
     }
+  }
 ```
 
 src/components/contents/Members.vue (21줄)
@@ -628,6 +631,7 @@ export default new Vuex.Store({
     axiosError(thisStore, error) {
       console.error(error.response || error.message || error)
     }
+  }
 ```
 
 src/store/moduleMembers.js
@@ -636,15 +640,15 @@ import axios from 'axios'
 ```
 ```diff
   actions: {
-    membersCreate(thisStore) {
+    membersCreate(thisStore, member) {
 -     thisStore.state.members.push({
--       name: thisStore.state.member.name,
--       age: thisStore.state.member.age
+-       name: member.name,
+-       age: member.age
 -     })
--     console.log('Done membersCreate', moduleMembers.state.members)
+-     console.log('Done membersCreate', thisStore.state.members)
 ```
 ```js
-      axios.post('http://localhost:3100/api/v1/members', thisStore.state.member).then(function(response) {
+      axios.post('http://localhost:3100/api/v1/members', member).then(function(response) {
         console.log('Done membersCreate', response)
         thisStore.dispatch('membersRead')
       }).catch(function(error) {
@@ -665,7 +669,7 @@ src/store/moduleMembers.js
 -       age: 16
 -     }]
 -     thisStore.commit('membersRead', members)
--     console.log('Done membersRead', moduleMembers.state.members)
+-     console.log('Done membersRead', thisStore.state.members)
 ```
 ```js
       axios.get('http://localhost:3100/api/v1/members').then(function(response) {
@@ -680,12 +684,12 @@ src/store/moduleMembers.js
 src/store/moduleMembers.js
 ```diff
   actions: {
-    membersUpdate(thisStore, memberUpdate) {
--     thisStore.state.members[memberUpdate.index] = memberUpdate.member
--     console.log('Done membersRead', moduleMembers.state.members)
+    membersUpdate(thisStore, index, member) {
+-     thisStore.state.members[index] = member
+-     console.log('Done membersRead', thisStore.state.members)
 ```
 ```js
-      axios.patch('http://localhost:3100/api/v1/members/' + memberUpdate.index, memberUpdate.member).then(function(response) {
+      axios.patch('http://localhost:3100/api/v1/members/' + index, member).then(function(response) {
         console.log('Done membersUpdate', response)
         thisStore.dispatch('membersRead')
       }).catch(function(error) {
@@ -699,7 +703,7 @@ src/store/moduleMembers.js
   actions: {
     membersUpdate(thisStore, memberUpdate) {
 -     thisStore.state.members.splice(index, 1)
--     console.log('Done membersDelete', moduleMembers.state.members)
+-     console.log('Done membersDelete', thisStore.state.members)
 ```
 ```js
       axios.delete('http://localhost:3100/api/v1/members/' + index).then(function(response) {
