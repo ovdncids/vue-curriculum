@@ -393,6 +393,7 @@ src/store/index.js
 export default new Vuex.Store({
   modules: {
 +   $members: moduleMembers
+  }
 ```
 
 ### Members Component Store inject
@@ -743,6 +744,7 @@ src/store/index.js
 export default new Vuex.Store({
   modules: {
 +   $search: moduleSearch
+  }
 ```
 
 ## Search Component Store inject
@@ -819,8 +821,11 @@ export default {
     searchRead() {
 -     this.$store.dispatch('searchRead', this.q)
 +     this.$router.push({ name: 'Search', query: { q: this.q }})
+    }
+  },
   created() {
 +   this.q = this.$route.query.q || ''
+  }
 ```
 
 ## Proxy 설정
