@@ -554,7 +554,7 @@ export default {
 src/store/moduleMembers.js
 ```js
   actions: {
-    membersUpdate(thisStore, index, member) {
+    membersUpdate(thisStore, { index, member }) {
       thisStore.state.members[index] = member
       console.log('Done membersUpdate', thisStore.state.members)
     }
@@ -578,7 +578,7 @@ src/components/contents/Members.vue (17줄)
 export default {
   methods: {
     membersUpdate(index, member) {
-      this.$store.dispatch('membersUpdate', index, member)
+      this.$store.dispatch('membersUpdate', { index, member })
     }
 ```
 
@@ -685,7 +685,7 @@ src/store/moduleMembers.js
 src/store/moduleMembers.js
 ```diff
   actions: {
-    membersUpdate(thisStore, index, member) {
+    membersUpdate(thisStore, { index, member }) {
 -     thisStore.state.members[index] = member
 -     console.log('Done membersRead', thisStore.state.members)
 ```
