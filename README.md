@@ -755,8 +755,8 @@ src/components/contents/Search.vue
     <h3>Search</h3>
     <hr class="d-block" />
     <div>
-      <form @submit.prevent="searchRead()">
-        <input type="text" placeholder="Search" v-model="q" />
+      <form>
+        <input type="text" placeholder="Search">
         <button>Search</button>
       </form>
     </div>
@@ -782,19 +782,9 @@ src/components/contents/Search.vue
 
 <script>
 export default {
-  data() {
-    return {
-      q: ''
-    }
-  },
   computed: {
     members() {
       return this.$store.state.$members.members
-    }
-  },
-  methods: {
-    searchRead() {
-      this.$store.dispatch('searchRead', this.q)
     }
   },
   created() {
@@ -804,18 +794,37 @@ export default {
 </script>
 ```
 
-## Search Component 쿼리스트링 변경과 새로고침 적용
+## Search Component에서만 사용 가능한 state값 적용
 src/components/contents/Search.vue
+```diff
+-     <form>
+-       <input type="text" placeholder="Search">
+-       <button>Search</button>
+-     </form>
+```
+```js
+      <form @submit.prevent="searchRead()">
+        <input type="text" placeholder="Search" v-model="q" />
+        <button>Search</button>
+      </form>
+```
 ```js
 export default {
-  watch: {
-    '$route.query': function(query, beforeQuery) {
-      console.log(query, beforeQuery)
-      this.q = query.q || ''
+  data() {
+    return {
+      q: ''
+    }
+  },
+  methods: {
+    searchRead() {
       this.$store.dispatch('searchRead', this.q)
     }
-  }
+  },
+}
 ```
+
+## Search Component 쿼리스트링 변경과 새로고침 적용
+src/components/contents/Search.vue
 ```diff
   methods: {
     searchRead() {
@@ -825,6 +834,18 @@ export default {
   },
   created() {
 +   this.q = this.$route.query.q || ''
+  }
+```
+* `검색`, `뒤로가기` 해보기
+
+```js
+export default {
+  watch: {
+    '$route.query': function(query, beforeQuery) {
+      console.log(query, beforeQuery)
+      this.q = query.q || ''
+      this.$store.dispatch('searchRead', this.q)
+    }
   }
 ```
 
