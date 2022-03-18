@@ -788,7 +788,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('searchRead', this.q)
+    this.$store.dispatch('searchRead', '')
   }
 }
 </script>
@@ -832,9 +832,6 @@ src/components/contents/Search.vue
 +     this.$router.push({ name: 'Search', query: { q: this.q }})
     }
   },
-  created() {
-+   this.q = this.$route.query.q || ''
-  }
 ```
 * `검색`, `뒤로가기` 해보기
 
@@ -846,6 +843,13 @@ export default {
       this.q = query.q || ''
       this.$store.dispatch('searchRead', this.q)
     }
+  }
+```
+```diff
+  created() {
+-   this.$store.dispatch('searchRead', '')  
++   this.q = this.$route.query.q || ''
++   this.$store.dispatch('searchRead', this.q)
   }
 ```
 
