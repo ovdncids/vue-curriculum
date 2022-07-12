@@ -111,8 +111,8 @@ src/components/Calendar.vue
           </tr>
         </thead>
         <tbody>
-          <tr v-for="line in 5" :key="line">
-            <td v-for="day in 7" :key="day">{{calcDay(line, day)}}</td>
+          <tr v-for="line in [0, 1, 2, 3, 4, 5]" :key="line">
+            <td v-for="day in [0, 1, 2, 3, 4, 5, 6, 7]" :key="day">{{calcDay(line, day)}}</td>
           </tr>
         </tbody>
       </table>
@@ -141,12 +141,10 @@ export default {
   },
   methods: {
     calcDay(line, day) {
-      const calc = (line - 1) * 7 + (day - 1) - this.firstDay.day()
+      const calc = line * 7 + day - this.firstDay.day()
       return moment(this.firstDay).add(calc, 'days').format('D')
+      // moment().add(0, 'days')은 날짜 변화 없음
     }
-  },
-  created() {
-    console.log('move')
   }
 }
 </script>
