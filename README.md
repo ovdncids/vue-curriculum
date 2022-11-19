@@ -635,6 +635,7 @@ export default new Vuex.Store({
   actions: {
     axiosError(thisStore, error) {
       console.error(error.response || error.message || error)
+      alert(error.response.statusText || error.message || '알 수 없는 오류가 발생 하였습니다.')
     }
   }
 ```
