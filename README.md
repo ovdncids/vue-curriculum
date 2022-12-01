@@ -371,9 +371,9 @@ Component가 사용하는 글로벌 함수 또는 변수라고 생각하면 쉽�
 
 Component에 변경된 사항을 다시 그리기 위해서 Store를 사용 한다.
 
-src/store/moduleMembers.js
+src/store/membersModule.js
 ```js
-export const moduleMembers = {
+export const membersModule = {
   state: {
     members: [],
     member: {
@@ -388,15 +388,15 @@ export const moduleMembers = {
 }
 ```
 
-**moduleMembers.js를 Store에 등록**
+**membersModule.js를 Store에 등록**
 
 src/store/index.js
 ```diff
-+ import { moduleMembers } from './moduleMembers.js'
++ import { membersModule } from './membersModule.js'
 
 export default new Vuex.Store({
   modules: {
-+   $members: moduleMembers
++   $members: membersModule
   }
 ```
 
@@ -481,7 +481,7 @@ debugger // eslint-disable-line no-debugger
 
 ## Members Store CRUD
 ### Create
-src/store/moduleMembers.js
+src/store/membersModule.js
 ```js
   actions: {
     membersCreate(thisStore, member) {
@@ -509,7 +509,7 @@ src/components/contents/Members.vue
 ```
 
 ### Read
-src/store/moduleMembers.js
+src/store/membersModule.js
 ```js
   mutations: {
     membersRead(state, members) {
@@ -555,7 +555,7 @@ export default {
 ```
 
 ### Update
-src/store/moduleMembers.js
+src/store/membersModule.js
 ```js
   actions: {
     membersUpdate(thisStore, { index, member }) {
@@ -587,7 +587,7 @@ export default {
 ```
 
 ### Delete
-src/store/moduleMembers.js
+src/store/membersModule.js
 ```js
   actions: {
     membersDelete(thisStore, index) {
@@ -635,12 +635,12 @@ export default new Vuex.Store({
   actions: {
     axiosError(thisStore, error) {
       console.error(error.response || error.message || error)
-      alert(error.response.statusText || error.message || '알 수 없는 오류가 발생 하였습니다.')
+      alert((error.response && error.response.statusText) || error.message || '알 수 없는 오류가 발생 하였습니다.')
     }
   }
 ```
 
-src/store/moduleMembers.js
+src/store/membersModule.js
 ```js
 import axios from 'axios'
 ```
@@ -663,7 +663,7 @@ import axios from 'axios'
 ```
 
 ### Read
-src/store/moduleMembers.js
+src/store/membersModule.js
 ```diff
   actions: {
     membersRead(thisStore) {
@@ -687,7 +687,7 @@ src/store/moduleMembers.js
 ```
 
 ### Update
-src/store/moduleMembers.js
+src/store/membersModule.js
 ```diff
   actions: {
     membersUpdate(thisStore, { index, member }) {
@@ -704,7 +704,7 @@ src/store/moduleMembers.js
 ```
 
 ### Delete
-src/store/moduleMembers.js
+src/store/membersModule.js
 ```diff
   actions: {
     membersUpdate(thisStore, memberUpdate) {
@@ -721,11 +721,11 @@ src/store/moduleMembers.js
 ```
 
 ## Search Store 만들기
-src/store/moduleSearch.js
+src/store/searchModule.js
 ```js
 import axios from 'axios'
 
-export const moduleSearch = {
+export const searchModule = {
   actions: {
     searchRead(thisStore, q) {
       const url = 'http://localhost:3100/api/v1/search?q=' + q
@@ -740,15 +740,15 @@ export const moduleSearch = {
 }
 ```
 
-**moduleSearch.js를 Store에 등록**
+**searchModule.js를 Store에 등록**
 
 src/store/index.js
 ```diff
-+ import { moduleSearch } from './moduleSearch.js'
++ import { searchModule } from './searchModule.js'
 
 export default new Vuex.Store({
   modules: {
-+   $search: moduleSearch
++   $search: searchModule
   }
 ```
 
