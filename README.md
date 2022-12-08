@@ -840,6 +840,13 @@ src/components/contents/Search.vue
 ```
 * `검색`, `뒤로가기` 해보기
 
+```diff
+  created() {
+-   this.$store.dispatch('searchRead', '')  
++   this.q = this.$route.query.q || ''
++   this.$store.dispatch('searchRead', this.q)
+  }
+```
 ```js
 export default {
   watch: {
@@ -848,13 +855,6 @@ export default {
       this.q = query.q || ''
       this.$store.dispatch('searchRead', this.q)
     }
-  }
-```
-```diff
-  created() {
--   this.$store.dispatch('searchRead', '')  
-+   this.q = this.$route.query.q || ''
-+   this.$store.dispatch('searchRead', this.q)
   }
 ```
 
