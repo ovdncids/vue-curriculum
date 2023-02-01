@@ -194,27 +194,27 @@ import '@/assets/scss/App.scss'
 ```
 
 ## Vue Component 만들기
-Header.vue, Nav.vue, Footer.vue 이렇게 Component 별로 파일을 나눈다.
+HeaderComponent.vue, NavComponent.vue, FooterComponent.vue 이렇게 Component 별로 파일을 나눈다.
 
 src/App.vue
 ```html
 <!-- 가장 아래에 추가 -->
 <script>
-import Header from './components/Header.vue'
-import Nav from './components/Nav.vue'
-import Footer from './components/Footer.vue'
+import HeaderComponent from './components/HeaderComponent.vue'
+import NavComponent from './components/NavComponent.vue'
+import FooterComponent from './components/FooterComponent.vue'
 
 export default {
   components: {
-    Header,
-    Nav,
-    Footer
+    HeaderComponent,
+    NavComponent,
+    FooterComponent
   }
 }
 </script>
 ```
 
-src/components/Header.vue
+src/components/HeaderComponent.vue
 ```html
 <template>
   <header>
@@ -228,7 +228,7 @@ src/App.vue
 - <header>
 -  <h1>Vue.js study</h1>
 - </header>
-+ <Header></Header>
++ <HeaderComponent></HeaderComponent>
 
 - <nav class="nav">
 -   <ul>
@@ -236,26 +236,26 @@ src/App.vue
 -     <li><h2>Search</h2></li>
 -   </ul>
 - </nav>
-+ <Nav></Nav>
++ <NavComponent></NavComponent>
 
 - <footer>Copyright</footer>
-+ <Footer></Footer>
++ <FooterComponent></FooterComponent>
 ```
 
 ### v-show, v-if, props
 src/App.vue
 ```html
-<Header v-show="false"></Header>
+<HeaderComponent v-show="false"></HeaderComponent>
 
-<Nav v-if="false"></Nav>
+<NavComponent v-if="false"></NavComponent>
 
-<Footer :title="'카피라이트'"></Footer>
+<FooterComponent :title="'카피라이트'"></FooterComponent>
 ```
 
-src/components/Footer.vue
+src/components/FooterComponent.vue
 ```diff
-- <footer>Copyright</footer>
-+ <footer>{{title}}</footer>
+- <FooterComponent>Copyright</FooterComponent>
++ <FooterComponent>{{title}}</FooterComponent>
 ```
 ```js
 <!-- 가장 아래에 추가 -->
@@ -288,13 +288,13 @@ export default {
 </script>
 ```
 
-src/components/Footer.vue
+src/components/FooterComponent.vue
 ```js
 <footer @click="$emit('callParentMethod', 'argument1')">{{title}}</footer>
 ```
 -->
 
-## Vue router
+## Vue Router
 src/App.vue (div 태그를 router-view 태그로 변경)
 ```diff
 <template>
@@ -306,7 +306,7 @@ src/App.vue (div 태그를 router-view 태그로 변경)
 +   <router-view></router-view>
 ```
 
-src/components/contents/Members.vue
+src/components/contents/MembersComponent.vue
 ```html
 <template>
   <div>
@@ -316,7 +316,7 @@ src/components/contents/Members.vue
 </template>
 ```
 
-src/components/contents/Search.vue (동일)
+src/components/contents/SearchComponent.vue (동일)
 
 src/router/index.js (3줄 부터 21줄 까지 덮어 씌우기)
 ```diff
@@ -325,8 +325,8 @@ src/router/index.js (3줄 부터 21줄 까지 덮어 씌우기)
 - ]
 ```
 ```js
-import Members from '../components/contents/Members.vue'
-import Search from '../components/contents/Search.vue'
+import Members from '../components/contents/MembersComponent.vue'
+import Search from '../components/contents/SearchComponent.vue'
 
 Vue.use(VueRouter)
 
@@ -354,7 +354,7 @@ new Vue({
 
 **주소 창에서 router 바꾸어 보기**
 
-src/components/Nav.vue (li 태그 부분 덮어 씌우기)
+src/components/NavComponent.vue (li 태그 부분 덮어 씌우기)
 ```html
 <li><h2><router-link :to="{name: 'Members'}" active-class="active">Members</router-link></h2></li>
 <li><h2><router-link :to="{path: '/search'}" active-class="active">Search</router-link></h2></li>
@@ -401,7 +401,7 @@ export default new Vuex.Store({
 ```
 
 ### Members Component Store inject
-src/components/contents/Members.vue
+src/components/contents/MembersComponent.vue
 ```js
 <template>
   <div>
@@ -494,7 +494,7 @@ src/store/membersModule.js
   }
 ```
 
-src/components/contents/Members.vue
+src/components/contents/MembersComponent.vue
 ```html
 <input type="text" placeholder="Name" v-model="member.name" />
 <input type="text" placeholder="Age" v-model="member.age" />
@@ -531,7 +531,7 @@ src/store/membersModule.js
   }
 ```
 
-src/components/contents/Members.vue (16줄)
+src/components/contents/MembersComponent.vue (16줄)
 ```diff
 - <tr>
 -  <td>홍길동</td>
@@ -554,6 +554,32 @@ export default {
   }
 ```
 
+### Delete
+src/store/membersModule.js
+```js
+  actions: {
+    membersDelete(thisStore, index) {
+      thisStore.state.members.splice(index, 1)
+      console.log('Done membersDelete', thisStore.state.members)
+    }
+  }
+```
+
+src/components/contents/MembersComponent.vue (21줄)
+```diff
+- <button>Delete</button>
+```
+```html
+<button @click="membersDelete(index)">Delete</button>
+```
+```js
+export default {
+  methods: {
+    membersDelete(index) {
+      this.$store.dispatch('membersDelete', index)
+    }
+```
+
 ### Update
 src/store/membersModule.js
 ```js
@@ -565,7 +591,7 @@ src/store/membersModule.js
   }
 ```
 
-src/components/contents/Members.vue (17줄)
+src/components/contents/MembersComponent.vue (17줄)
 ```diff
 - <td>{{member.name}}</td>
 - <td>{{member.age}}</td>
@@ -583,32 +609,6 @@ export default {
   methods: {
     membersUpdate(index, member) {
       this.$store.dispatch('membersUpdate', { index, member })
-    }
-```
-
-### Delete
-src/store/membersModule.js
-```js
-  actions: {
-    membersDelete(thisStore, index) {
-      thisStore.state.members.splice(index, 1)
-      console.log('Done membersDelete', thisStore.state.members)
-    }
-  }
-```
-
-src/components/contents/Members.vue (21줄)
-```diff
-- <button>Delete</button>
-```
-```html
-<button @click="membersDelete(index)">Delete</button>
-```
-```js
-export default {
-  methods: {
-    membersDelete(index) {
-      this.$store.dispatch('membersDelete', index)
     }
 ```
 
@@ -686,23 +686,6 @@ src/store/membersModule.js
       })
 ```
 
-### Update
-src/store/membersModule.js
-```diff
-  actions: {
-    membersUpdate(thisStore, { index, member }) {
--     thisStore.state.members[index] = member
--     console.log('Done membersRead', thisStore.state.members)
-```
-```js
-      axios.patch('http://localhost:3100/api/v1/members/' + index, member).then(function(response) {
-        console.log('Done membersUpdate', response)
-        thisStore.dispatch('membersRead')
-      }).catch(function(error) {
-        thisStore.dispatch('axiosError', error)
-      })
-```
-
 ### Delete
 src/store/membersModule.js
 ```diff
@@ -714,6 +697,23 @@ src/store/membersModule.js
 ```js
       axios.delete('http://localhost:3100/api/v1/members/' + index).then(function(response) {
         console.log('Done membersDelete', response)
+        thisStore.dispatch('membersRead')
+      }).catch(function(error) {
+        thisStore.dispatch('axiosError', error)
+      })
+```
+
+### Update
+src/store/membersModule.js
+```diff
+  actions: {
+    membersUpdate(thisStore, { index, member }) {
+-     thisStore.state.members[index] = member
+-     console.log('Done membersRead', thisStore.state.members)
+```
+```js
+      axios.patch('http://localhost:3100/api/v1/members/' + index, member).then(function(response) {
+        console.log('Done membersUpdate', response)
         thisStore.dispatch('membersRead')
       }).catch(function(error) {
         thisStore.dispatch('axiosError', error)
@@ -753,7 +753,7 @@ export default new Vuex.Store({
 ```
 
 ## Search Component Store inject
-src/components/contents/Search.vue
+src/components/contents/SearchComponent.vue
 ```js
 <template>
   <div>
@@ -800,7 +800,7 @@ export default {
 ```
 
 ## Search Component에서만 사용 가능한 state값 적용
-src/components/contents/Search.vue
+src/components/contents/SearchComponent.vue
 ```diff
 -     <form>
 -       <input type="text" placeholder="Search">
@@ -829,7 +829,7 @@ export default {
 ```
 
 ## Search Component 쿼리스트링 변경과 새로고침 적용
-src/components/contents/Search.vue
+src/components/contents/SearchComponent.vue
 ```diff
   methods: {
     searchRead() {
@@ -855,7 +855,7 @@ export default {
       this.q = query.q || ''
       this.$store.dispatch('searchRead', this.q)
     }
-  }
+  },
 ```
 
 ## Proxy 설정
