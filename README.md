@@ -276,18 +276,21 @@ src/components/contents/MembersComponent.vue
 
 src/components/contents/SearchComponent.vue (동일)
 
-src/router/index.js (3줄 부터 21줄 까지 덮어 씌우기)
+src/router/index.js
 ```diff
 - import Home from '../views/Home.vue'
-- ...
-- ]
 ```
 ```js
 import Members from '../components/contents/MembersComponent.vue'
 import Search from '../components/contents/SearchComponent.vue'
+```
 
-Vue.use(VueRouter)
-
+```diff
+- const routes = [
+- ...
+- ]
+```
+```js
 const routes = [
   { path: '/', redirect: '/members' },
   {
