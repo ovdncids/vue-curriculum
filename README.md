@@ -361,7 +361,7 @@ export default new Vuex.Store({
   }
 ```
 
-### Members Component Store inject
+### Members Component Vuex Store 주입
 src/components/contents/MembersComponent.vue
 ```js
 <template>
