@@ -589,7 +589,7 @@ https://github.com/axios/axios
 npm install axios
 ```
 
-### Create
+### Read
 src/store/index.js
 ```js
 export default new Vuex.Store({
@@ -607,26 +607,6 @@ import axios from 'axios'
 ```
 ```diff
   actions: {
-    membersCreate(thisStore, member) {
--     thisStore.state.members.push({
--       name: member.name,
--       age: member.age
--     })
--     console.log('Done membersCreate', thisStore.state.members)
-```
-```js
-      axios.post('http://localhost:3100/api/v1/members', member).then(function(response) {
-        console.log('Done membersCreate', response)
-        thisStore.dispatch('membersRead')
-      }).catch(function(error) {
-        thisStore.dispatch('axiosError', error)
-      })
-```
-
-### Read
-src/store/membersModule.js
-```diff
-  actions: {
     membersRead(thisStore) {
 -     const members = [{
 -       name: '홍길동',
@@ -642,6 +622,26 @@ src/store/membersModule.js
       axios.get('http://localhost:3100/api/v1/members').then(function(response) {
         console.log('Done membersRead', response)
         thisStore.commit('membersRead', response.data.members)
+      }).catch(function(error) {
+        thisStore.dispatch('axiosError', error)
+      })
+```
+
+### Create
+src/store/membersModule.js
+```diff
+  actions: {
+    membersCreate(thisStore, member) {
+-     thisStore.state.members.push({
+-       name: member.name,
+-       age: member.age
+-     })
+-     console.log('Done membersCreate', thisStore.state.members)
+```
+```js
+      axios.post('http://localhost:3100/api/v1/members', member).then(function(response) {
+        console.log('Done membersCreate', response)
+        thisStore.dispatch('membersRead')
       }).catch(function(error) {
         thisStore.dispatch('axiosError', error)
       })
