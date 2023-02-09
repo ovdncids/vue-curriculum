@@ -85,7 +85,7 @@ layouts/nav.vue
         <h2><nuxt-link to="/">Home</nuxt-link></h2>
       </li>
       <li>
-        <h2><nuxt-link to="/members">Members</nuxt-link></h2>
+        <h2><nuxt-link to="/users">Users</nuxt-link></h2>
       </li>
       <li>
         <h2><nuxt-link to="/search">Search</nuxt-link></h2>
@@ -166,24 +166,24 @@ input[type=text] {
 }
 ```
 
-## Members Store
+## Users Store
 ### Read
-store/members.js
+store/users.js
 ```js
 export const state = () => ({
-  members: null
+  users: null
 })
 
 export const mutations = {
-  membersRead(state, members) {
-    state.members = members
+  usersRead(state, users) {
+    state.users = users
   }
 }
 
 export const actions = {
-  membersRead({ commit }, context) {
-    return context.$axios.get('http://localhost:3100/api/v1/members').then(response => {
-      commit('membersRead', response.data.members)
+  usersRead({ commit }, context) {
+    return context.$axios.get('http://localhost:3100/api/v1/users').then(response => {
+      commit('usersRead', response.data.users)
     })
   }
 }
@@ -211,11 +211,11 @@ rules: {
 ```
 -->
 
-pages/members.vue
+pages/users.vue
 ```vue
 <template>
   <div>
-    <h3>Members</h3>
+    <h3>Users</h3>
     <hr class="d-block" />
     <div>
       <h4>Read</h4>
@@ -228,9 +228,9 @@ pages/members.vue
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(member, index) in members" :key="index">
-            <td>{{member.name}}</td>
-            <td>{{member.age}}</td>
+          <tr v-for="(user, index) in users" :key="index">
+            <td>{{user.name}}</td>
+            <td>{{user.age}}</td>
             <td>
               <button>Update</button>
               <button>Delete</button>
@@ -254,22 +254,22 @@ import Vue from 'vue'
 
 export default Vue.extend({
   asyncData(context) {
-    return context.store.dispatch('members/membersRead', context)
+    return context.store.dispatch('users/usersRead', context)
   },
   computed: {
-    members() {
-      return this.$store.state.members.members
+    users() {
+      return this.$store.state.users.users
     }
   },
   created() {
     debugger
-    console.log(this.$store.state.members.members)
-    if (this.$store.state.members.members === null) {
-      return this.$store.dispatch('members/membersRead', this)
+    console.log(this.$store.state.users.users)
+    if (this.$store.state.users.users === null) {
+      return this.$store.dispatch('users/usersRead', this)
     }
   },
   destroyed() {
-    // this.$store.commit('members/membersRead', null)
+    // this.$store.commit('users/usersRead', null)
   }
 })
 </script>
@@ -281,8 +281,8 @@ export default Vue.extend({
 ```js
 async asyncData(context) {
   // console.log(context.route.query, context.query);
-  await context.store.dispatch('members/membersRead', context)
-  await context.store.dispatch('members/membersRead', context)
+  await context.store.dispatch('users/usersRead', context)
+  await context.store.dispatch('users/usersRead', context)
   debugger
 }
 ```

@@ -65,14 +65,14 @@ src/App.vue (덮어 씌우기)
     <div class="container">
       <nav class="nav">
         <ul>
-          <li><h2>Members</h2></li>
+          <li><h2>Users</h2></li>
           <li><h2>Search</h2></li>
         </ul>
       </nav>
       <hr />
       <section class="contents">
         <div>
-          <h3>Members</h3>
+          <h3>Users</h3>
           <p>Contents</p>
         </div>
       </section>
@@ -190,7 +190,7 @@ src/App.vue
 
 - <nav class="nav">
 -   <ul>
--     <li><h2>Members</h2></li>
+-     <li><h2>Users</h2></li>
 -     <li><h2>Search</h2></li>
 -   </ul>
 - </nav>
@@ -258,17 +258,17 @@ src/App.vue (div 태그를 router-view 태그로 변경)
 <template>
   <section class="contents">
 -   <div>
--     <h3>Members</h3>
+-     <h3>Users</h3>
 -     <p>Contents</p>
 -   </div>
 +   <router-view></router-view>
 ```
 
-src/components/contents/MembersComponent.vue
+src/components/contents/UsersComponent.vue
 ```html
 <template>
   <div>
-    <h3>Members</h3>
+    <h3>Users</h3>
     <p>Contents</p>
   </div>
 </template>
@@ -281,7 +281,7 @@ src/router/index.js
 - import Home from '../views/Home.vue'
 ```
 ```js
-import Members from '../components/contents/MembersComponent.vue'
+import Users from '../components/contents/UsersComponent.vue'
 import Search from '../components/contents/SearchComponent.vue'
 ```
 
@@ -292,11 +292,11 @@ import Search from '../components/contents/SearchComponent.vue'
 ```
 ```js
 const routes = [
-  { path: '/', redirect: '/members' },
+  { path: '/', redirect: '/users' },
   {
-    path: '/members',
-    name: 'Members',
-    component: Members
+    path: '/users',
+    name: 'Users',
+    component: Users
   },
   {
     path: '/search',
@@ -317,13 +317,13 @@ new Vue({
 
 src/components/NavComponent.vue (li 태그 부분 덮어 씌우기)
 ```html
-<li><h2><router-link :to="{name: 'Members'}" active-class="active">Members</router-link></h2></li>
+<li><h2><router-link :to="{name: 'Users'}" active-class="active">Users</router-link></h2></li>
 <li><h2><router-link :to="{path: '/search'}" active-class="active">Search</router-link></h2></li>
 ```
 
 **여기 까지가 Markup 개발자 분들이 할일 입니다.**
 
-## Members Store 만들기
+## Users Store 만들기
 **Store 개념 설명**
 
 Component가 사용하는 글로벌 함수 또는 변수라고 생각하면 쉽다, state 값이 변하면 해당 값을 바라 보는 모든 Component가 수정 된다.
@@ -332,12 +332,12 @@ Component가 사용하는 글로벌 함수 또는 변수라고 생각하면 쉽�
 
 Component에 변경된 사항을 다시 그리기 위해서 Store를 사용 한다.
 
-src/store/membersModule.js
+src/store/usersModule.js
 ```js
-export const membersModule = {
+export const usersModule = {
   state: {
-    members: [],
-    member: {
+    users: [],
+    user: {
       name: '',
       age: ''
     }
@@ -349,24 +349,24 @@ export const membersModule = {
 }
 ```
 
-**membersModule.js를 Store에 등록**
+**usersModule.js를 Store에 등록**
 
 src/store/index.js
 ```diff
-+ import { membersModule } from './membersModule.js'
++ import { usersModule } from './usersModule.js'
 
 export default new Vuex.Store({
   modules: {
-+   $members: membersModule
++   $users: usersModule
   }
 ```
 
-### Members Component Vuex Store 주입
-src/components/contents/MembersComponent.vue
+### Users Component Vuex Store 주입
+src/components/contents/UsersComponent.vue
 ```js
 <template>
   <div>
-    <h3>Members</h3>
+    <h3>Users</h3>
     <hr class="d-block" />
     <div>
       <h4>Read</h4>
@@ -403,16 +403,16 @@ src/components/contents/MembersComponent.vue
 <script>
 export default {
   computed: {
-    member() {
-      return this.$store.state.$members.member
+    user() {
+      return this.$store.state.$users.user
     }
   },
   methods: {
   },
   created() {
-    console.log(this.member)
-    this.member.name = ''
-    this.member.age = ''
+    console.log(this.user)
+    this.user.name = ''
+    this.user.age = ''
   }
 }
 </script>
@@ -440,136 +440,136 @@ package.json
 debugger // eslint-disable-line no-debugger
 ```
 
-## Members Store CRUD
+## Users Store CRUD
 ### Create
-src/store/membersModule.js
+src/store/usersModule.js
 ```js
   actions: {
-    membersCreate(thisStore, member) {
-      thisStore.state.members.push({
-        name: member.name,
-        age: member.age
+    usersCreate(thisStore, user) {
+      thisStore.state.users.push({
+        name: user.name,
+        age: user.age
       })
-      console.log('Done membersCreate', thisStore.state.members)
+      console.log('Done usersCreate', thisStore.state.users)
     }
   }
 ```
 
-src/components/contents/MembersComponent.vue
+src/components/contents/UsersComponent.vue
 ```html
-<input type="text" placeholder="Name" v-model="member.name" />
-<input type="text" placeholder="Age" v-model="member.age" />
-<button @click="membersCreate(member)">Create</button>
+<input type="text" placeholder="Name" v-model="user.name" />
+<input type="text" placeholder="Age" v-model="user.age" />
+<button @click="usersCreate(user)">Create</button>
 ```
 ```js
   methods: {
-    membersCreate(member) {
-      this.$store.dispatch('membersCreate', member)
+    usersCreate(user) {
+      this.$store.dispatch('usersCreate', user)
     }
   }
 ```
 
 ### Read
-src/store/membersModule.js
+src/store/usersModule.js
 ```js
   mutations: {
-    membersRead(state, members) {
-      state.members = members
+    usersRead(state, users) {
+      state.users = users
     }
   },
   actions: {
-    membersRead(thisStore) {
-      const members = [{
+    usersRead(thisStore) {
+      const users = [{
         name: '홍길동',
         age: 20
       }, {
         name: '춘향이',
         age: 16
       }]
-      thisStore.commit('membersRead', members)
-      console.log('Done membersRead', thisStore.state.members)
+      thisStore.commit('usersRead', users)
+      console.log('Done usersRead', thisStore.state.users)
     }
   }
 ```
 
-src/components/contents/MembersComponent.vue (16줄)
+src/components/contents/UsersComponent.vue (16줄)
 ```diff
 - <tr>
 -  <td>홍길동</td>
 -  <td>20</td>
 ```
 ```html
-<tr v-for="(member, index) in members" :key="index">
-  <td>{{member.name}}</td>
-  <td>{{member.age}}</td>
+<tr v-for="(user, index) in users" :key="index">
+  <td>{{user.name}}</td>
+  <td>{{user.age}}</td>
 ```
 ```js
 export default {
   computed: {
-    members() {
-      return this.$store.state.$members.members
+    users() {
+      return this.$store.state.$users.users
     }
   },
   created() {
-    this.$store.dispatch('membersRead')
+    this.$store.dispatch('usersRead')
   }
 ```
 
 ### Delete
-src/store/membersModule.js
+src/store/usersModule.js
 ```js
   actions: {
-    membersDelete(thisStore, index) {
-      thisStore.state.members.splice(index, 1)
-      console.log('Done membersDelete', thisStore.state.members)
+    usersDelete(thisStore, index) {
+      thisStore.state.users.splice(index, 1)
+      console.log('Done usersDelete', thisStore.state.users)
     }
   }
 ```
 
-src/components/contents/MembersComponent.vue (21줄)
+src/components/contents/UsersComponent.vue (21줄)
 ```diff
 - <button>Delete</button>
 ```
 ```html
-<button @click="membersDelete(index)">Delete</button>
+<button @click="usersDelete(index)">Delete</button>
 ```
 ```js
 export default {
   methods: {
-    membersDelete(index) {
-      this.$store.dispatch('membersDelete', index)
+    usersDelete(index) {
+      this.$store.dispatch('usersDelete', index)
     }
 ```
 
 ### Update
-src/store/membersModule.js
+src/store/usersModule.js
 ```js
   actions: {
-    membersUpdate(thisStore, { index, member }) {
-      thisStore.state.members[index] = member
-      console.log('Done membersUpdate', thisStore.state.members)
+    usersUpdate(thisStore, { index, user }) {
+      thisStore.state.users[index] = user
+      console.log('Done usersUpdate', thisStore.state.users)
     }
   }
 ```
 
-src/components/contents/MembersComponent.vue (17줄)
+src/components/contents/UsersComponent.vue (17줄)
 ```diff
-- <td>{{member.name}}</td>
-- <td>{{member.age}}</td>
+- <td>{{user.name}}</td>
+- <td>{{user.age}}</td>
 - <td>
 -  <button>Update</button>
 ```
 ```html
-<td><input type="text" placeholder="Name" v-model="member.name" /></td>
-<td><input type="text" placeholder="Age" v-model="member.age" /></td>
+<td><input type="text" placeholder="Name" v-model="user.name" /></td>
+<td><input type="text" placeholder="Age" v-model="user.age" /></td>
 <td>
-  <button @click="membersUpdate(index, member)">Update</button>
+  <button @click="usersUpdate(index, user)">Update</button>
 ```
 ```js
 export default {
   methods: {
-    membersUpdate(index, member) {
-      this.$store.dispatch('membersUpdate', { index, member })
+    usersUpdate(index, user) {
+      this.$store.dispatch('usersUpdate', { index, user })
     }
 ```
 
@@ -601,81 +601,81 @@ export default new Vuex.Store({
   }
 ```
 
-src/store/membersModule.js
+src/store/usersModule.js
 ```js
 import axios from 'axios'
 ```
 ```diff
   actions: {
-    membersRead(thisStore) {
--     const members = [{
+    usersRead(thisStore) {
+-     const users = [{
 -       name: '홍길동',
 -       age: 20
 -     }, {
 -       name: '춘향이',
 -       age: 16
 -     }]
--     thisStore.commit('membersRead', members)
--     console.log('Done membersRead', thisStore.state.members)
+-     thisStore.commit('usersRead', users)
+-     console.log('Done usersRead', thisStore.state.users)
 ```
 ```js
-      axios.get('http://localhost:3100/api/v1/members').then(function(response) {
-        console.log('Done membersRead', response)
-        thisStore.commit('membersRead', response.data.members)
+      axios.get('http://localhost:3100/api/v1/users').then(function(response) {
+        console.log('Done usersRead', response)
+        thisStore.commit('usersRead', response.data.users)
       }).catch(function(error) {
         thisStore.dispatch('axiosError', error)
       })
 ```
 
 ### Create
-src/store/membersModule.js
+src/store/usersModule.js
 ```diff
   actions: {
-    membersCreate(thisStore, member) {
--     thisStore.state.members.push({
--       name: member.name,
--       age: member.age
+    usersCreate(thisStore, user) {
+-     thisStore.state.users.push({
+-       name: user.name,
+-       age: user.age
 -     })
--     console.log('Done membersCreate', thisStore.state.members)
+-     console.log('Done usersCreate', thisStore.state.users)
 ```
 ```js
-      axios.post('http://localhost:3100/api/v1/members', member).then(function(response) {
-        console.log('Done membersCreate', response)
-        thisStore.dispatch('membersRead')
+      axios.post('http://localhost:3100/api/v1/users', user).then(function(response) {
+        console.log('Done usersCreate', response)
+        thisStore.dispatch('usersRead')
       }).catch(function(error) {
         thisStore.dispatch('axiosError', error)
       })
 ```
 
 ### Delete
-src/store/membersModule.js
+src/store/usersModule.js
 ```diff
   actions: {
-    membersUpdate(thisStore, memberUpdate) {
--     thisStore.state.members.splice(index, 1)
--     console.log('Done membersDelete', thisStore.state.members)
+    usersUpdate(thisStore, userUpdate) {
+-     thisStore.state.users.splice(index, 1)
+-     console.log('Done usersDelete', thisStore.state.users)
 ```
 ```js
-      axios.delete('http://localhost:3100/api/v1/members/' + index).then(function(response) {
-        console.log('Done membersDelete', response)
-        thisStore.dispatch('membersRead')
+      axios.delete('http://localhost:3100/api/v1/users/' + index).then(function(response) {
+        console.log('Done usersDelete', response)
+        thisStore.dispatch('usersRead')
       }).catch(function(error) {
         thisStore.dispatch('axiosError', error)
       })
 ```
 
 ### Update
-src/store/membersModule.js
+src/store/usersModule.js
 ```diff
   actions: {
-    membersUpdate(thisStore, { index, member }) {
--     thisStore.state.members[index] = member
--     console.log('Done membersRead', thisStore.state.members)
+    usersUpdate(thisStore, { index, user }) {
+-     thisStore.state.users[index] = user
+-     console.log('Done usersRead', thisStore.state.users)
 ```
 ```js
-      axios.patch('http://localhost:3100/api/v1/members/' + index, member).then(function(response) {
-        console.log('Done membersUpdate', response)
-        thisStore.dispatch('membersRead')
+      axios.patch('http://localhost:3100/api/v1/users/' + index, user).then(function(response) {
+        console.log('Done usersUpdate', response)
+        thisStore.dispatch('usersRead')
       }).catch(function(error) {
         thisStore.dispatch('axiosError', error)
       })
@@ -692,7 +692,7 @@ export const searchModule = {
       const url = 'http://localhost:3100/api/v1/search?q=' + q
       axios.get(url).then(function(response) {
         console.log('Done searchRead', response)
-        thisStore.commit('membersRead', response.data.members)
+        thisStore.commit('usersRead', response.data.users)
       }).catch(function(error) {
         thisStore.dispatch('axiosError', error)
       })
@@ -736,9 +736,9 @@ src/components/contents/SearchComponent.vue
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(member, key) in members" :key="key">
-            <td>{{member.name}}</td>
-            <td>{{member.age}}</td>
+          <tr v-for="(user, key) in users" :key="key">
+            <td>{{user.name}}</td>
+            <td>{{user.age}}</td>
           </tr>
         </tbody>
       </table>
@@ -749,8 +749,8 @@ src/components/contents/SearchComponent.vue
 <script>
 export default {
   computed: {
-    members() {
-      return this.$store.state.$members.members
+    users() {
+      return this.$store.state.$users.users
     }
   },
   created() {
