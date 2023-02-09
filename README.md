@@ -713,7 +713,7 @@ export default new Vuex.Store({
   }
 ```
 
-## Search Component Store inject
+## Search Component Vuex Store 주입
 src/components/contents/SearchComponent.vue
 ```js
 <template>
