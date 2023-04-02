@@ -305,3 +305,24 @@ async asyncData() {
 }
 ```
 * ❕ `return`의 `{}` 부분이 `this(data)` 안으로 자동으로 들어가게 된다.
+
+# Vite
+* https://vite.nuxtjs.org/getting-started/installation
+```sh
+npm install -D nuxt-vite@0.2.4
+```
+
+nuxt.config.js
+```js
+export default {
+  buildModules: [
+    'nuxt-vite'
+  ],
+  vite: {
+    ssr: true
+  }
+}
+```
+
+## Cannot find module 'lib/axios'
+* https://github.com/nuxt/vite/issues/221
