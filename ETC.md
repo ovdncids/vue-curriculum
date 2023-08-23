@@ -1,4 +1,4 @@
-# Tips
+# ETC
 
 ## 이미지 부르기
 ```vue
@@ -10,3 +10,6 @@ imgMain(img) {
 }
 </script>
 ```
+
+## vuex-persistedstate
+* https://github.com/robinvdvleuten/vuex-persistedstate
