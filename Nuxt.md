@@ -56,7 +56,7 @@ import Vue from 'vue'
 import LayoutHeader from './header.vue'
 import LayoutNav from './nav.vue'
 import LayoutFooter from './footer.vue'
-import '~/static/style/index.css'
+import '~/style/index.css'
 
 export default {
   components: {
@@ -103,7 +103,7 @@ layouts/footer.vue
 </template>
 ```
 
-static/style/index.css
+style/index.css
 ```css
 * {
   margin: 0;
@@ -172,7 +172,7 @@ input[type=text] {
 store/usersStore.js
 ```js
 export const state = () => ({
-  users: null
+  users: []
 })
 
 export const mutations = {
@@ -272,6 +272,42 @@ export default {
 * ❕ `pages 폴더` 안에서만 `asyncData` 함수 사용 가능하다.
 * `Nav 메뉴`에서 router 이동 후 돌아 온다면, `CSR`쪽에서 `asyncData`, `created` 함수가 실행 된다.
 * `IE11`에서도 별도의 `Polyfill`없이 `async, await` 사용 가능 하다.
+
+### Create
+pages/users.vue
+```vue
+<input type="text" placeholder="Name" v-model="user.name" />
+<input type="text" placeholder="Age" v-model="user.age" />
+<button @click="usersCreate(user)">Create</button>
+```
+```vue
+data() {
+  return {
+    user: {
+      name: '',
+      age: ''
+    }
+  }
+},
+methods: {
+  usersCreate(user) {
+    this.$store.dispatch('usersStore/usersCreate', {
+      context: this,
+      user
+    })
+  }
+}
+```
+
+store/usersStore.js
+```js
+async usersCreate(_, { context, user }) {
+  try {
+    await context.$axios.post('http://localhost:3100/api/v1/users', user)
+    context.$store.dispatch('usersStore/usersRead', context)
+  } catch (error) {}
+}
+```
 
 # Promise.all
 ```js
