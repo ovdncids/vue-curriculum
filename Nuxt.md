@@ -254,7 +254,6 @@ pages/users.vue
 <script>
 export default {
   async asyncData(context) {
-    debugger
     await context.store.dispatch('usersStore/usersRead', context)
   },
   computed: {
@@ -263,13 +262,14 @@ export default {
     }
   },
   // async created() {
+  //   debugger
   //   await this.$store.dispatch('usersStore/usersRead', this)
   // }
 }
 </script>
 ```
-* ❕ `asyncData`, `created` 함수 모두 `SSR`에서 동작 하지만 `created`는 store.state 값을 commit으로 넣기 전의 상태로 `SSR`이 완료 된다.
-* ❕ `pages 폴더` 안에서만 `asyncData` 함수 사용 가능하고, `created`는 `this.$data`에 값을 넣는 `SSR`에 사용하자.
+* ❕ `asyncData`, `created` 함수 모두 `SSR`에서 동작 하지만 `created`는 async await 도중에 페이지가 그려진다.
+* ❕ `pages 폴더` 안에서만 `asyncData` 함수 사용 가능하다.
 * `Nav 메뉴`에서 router 이동 후 돌아 온다면, `CSR`쪽에서 `asyncData`, `created` 함수가 실행 된다.
 * `IE11`에서도 별도의 `Polyfill`없이 `async, await` 사용 가능 하다.
 
