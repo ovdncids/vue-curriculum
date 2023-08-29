@@ -274,6 +274,8 @@ export default {
 * `IE11`에서도 별도의 `Polyfill`없이 `async, await` 사용 가능 하다.
 
 ### Create
+* ❕ `store.state`는 `commit함수`를 통해서만 수정 가능하다.
+
 pages/users.vue
 ```vue
 <input type="text" placeholder="Name" v-model="user.name" />
@@ -301,11 +303,13 @@ methods: {
 
 store/usersStore.js
 ```js
-async usersCreate(_, { context, user }) {
+async usersCreate({ dispatch }, { context, user }) {
   try {
     await context.$axios.post('http://localhost:3100/api/v1/users', user)
-    context.$store.dispatch('usersStore/usersRead', context)
-  } catch (error) {}
+    dispatch('usersRead', context)
+  } catch (error) {
+    console.error(error)
+  }
 }
 ```
 
@@ -325,10 +329,49 @@ usersDelete(index) {
 
 store/usersStore.js
 ```js
-async usersDelete(_, { context, index }) {
+async usersDelete({ dispatch }, { context, index }) {
   try {
     await context.$axios.delete('http://localhost:3100/api/v1/users/' + index)
-    context.$store.dispatch('usersStore/usersRead', context)
+    dispatch('usersRead', context)
+  } catch (error) {
+    console.error(error)
+  }
+}
+```
+
+### Update
+pages/users.vue
+```vue
+<td><input type="text" placeholder="Name" v-model="user.name" /></td>
+<td><input type="text" placeholder="Age" v-model="user.age" /></td>
+<td>
+  <button @click="usersUpdate(index, user)">Update</button>
+```
+```vue
+computed: {
+  users() {
+    return [
+      ...JSON.parse(JSON.stringify(this.$store.state.usersStore.users))
+    ]
+  }
+},
+```
+```vue
+usersUpdate(index, user) {
+  this.$store.dispatch('usersStore/usersUpdate', {
+    context: this,
+    index,
+    user
+  })
+}
+```
+
+store/usersStore.js
+```js
+async usersUpdate({ dispatch }, { context, index, user }) {
+  try {
+    await context.$axios.patch('http://localhost:3100/api/v1/users/' + index, user)
+    dispatch('usersRead', context)
   } catch (error) {
     console.error(error)
   }
