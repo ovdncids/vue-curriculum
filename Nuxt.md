@@ -292,7 +292,7 @@ async asyncData() {
 # Vite
 * https://vite.nuxtjs.org/getting-started/installation
 ```sh
-// Nuxt@2.16.3
+// Nuxt@2.15.8
 npm install -D nuxt-vite@0.2.4
 ```
 
