@@ -33,7 +33,7 @@ npm run dev
 ```
 
 ## Markup
-components/layouts/layout.vue
+layouts/default.vue
 ```vue
 <template>
   <div>
