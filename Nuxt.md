@@ -268,9 +268,6 @@ export default {
 }
 </script>
 ```
-* ❕ `asyncData` 안에 `return`이 있다면 `SSR`에서 비동기 통신 완료 후, `CSR`의 `created` 함수가 실행된다. (따라서 `SEO`가 가능해 진다.)
-* 하지만 `asyncData`를 주석 처리하고 created 함수에서 비동기 통신 한다면, HTML이 그려진 상황에서 통신을 하게 되므로 `SEO`가 어려워진다.
-
 * ❕ `asyncData`, `created` 함수 모두 `SSR`에서 동작 하지만 `created`는 store.state 값을 commit으로 값을 넣을 수 없다.
 * `pages 폴더` 안에서만 `asyncData` 함수 사용 가능하고, `created`는 store commit을 사용하지 않는 `SSR`에 사용하자.
 * `Nav 메뉴`에서 router 이동 후 돌아 온다면, `CSR`쪽에서 `asyncData`, `created` 함수가 실행 된다.
