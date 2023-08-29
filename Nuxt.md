@@ -10,8 +10,9 @@ npx create-nuxt-app nuxt-study
   Programming language: JavaScript
   Package manager: Npm
   UI framework: None
+  Template engine: HTML
   Nuxt.js modules: Axios - Promise based HTTP client <-선택
-  Linting tools: 선택 안함
+  Linting tools: Commitlint (https://github.com/conventional-changelog/commitlint/#what-is-commitlint)
   Testing framework: None or Jest
   Rendering mode: Universal (SSR / SSG)
   Deployment target: Server (Node.js hosting)
@@ -32,7 +33,7 @@ npm run dev
 ```
 
 ## Markup
-layouts/default.vue
+components/layouts/layout.vue
 ```vue
 <template>
   <div>
@@ -55,15 +56,15 @@ import Vue from 'vue'
 import LayoutHeader from './header.vue'
 import LayoutNav from './nav.vue'
 import LayoutFooter from './footer.vue'
-import '../static/style/index.css'
+import '~/static/style/index.css'
 
-export default Vue.extend({
+export default {
   components: {
     LayoutHeader,
     LayoutNav,
     LayoutFooter
   }
-})
+}
 </script>
 ```
 
@@ -168,7 +169,7 @@ input[type=text] {
 
 ## Users Store
 ### Read
-store/users.js
+store/usersStore.js
 ```js
 export const state = () => ({
   users: null
@@ -181,10 +182,11 @@ export const mutations = {
 }
 
 export const actions = {
-  usersRead({ commit }, context) {
-    return context.$axios.get('http://localhost:3100/api/v1/users').then(response => {
+  async usersRead({ commit }, context) {
+    try {
+      await context.$axios.get('http://localhost:3100/api/v1/users')
       commit('usersRead', response.data.users)
-    })
+    } catch (error) {}
   }
 }
 ```
@@ -250,47 +252,31 @@ pages/users.vue
 </template>
 
 <script>
-import Vue from 'vue'
-
-export default Vue.extend({
-  asyncData(context) {
-    return context.store.dispatch('users/usersRead', context)
+export default {
+  async asyncData(context) {
+    debugger
+    await context.store.dispatch('usersStore/usersRead', context)
   },
   computed: {
     users() {
-      return this.$store.state.users.users
+      return this.$store.state.usersStore.users
     }
   },
-  created() {
-    debugger
-    console.log(this.$store.state.users.users)
-    if (this.$store.state.users.users === null) {
-      return this.$store.dispatch('users/usersRead', this)
-    }
-  },
-  destroyed() {
-    // this.$store.commit('users/usersRead', null)
+  async created() {
+    await this.$store.dispatch('usersStore/usersRead', this)
   }
-})
+}
 </script>
 ```
 * ❕ `asyncData` 안에 `return`이 있다면 `SSR`에서 비동기 통신 완료 후, `CSR`의 `created` 함수가 실행된다. (따라서 `SEO`가 가능해 진다.)
 * 하지만 `asyncData`를 주석 처리하고 created 함수에서 비동기 통신 한다면, HTML이 그려진 상황에서 통신을 하게 되므로 `SEO`가 어려워진다.
 
-### asyncData에 async, await 적용
-```js
-async asyncData(context) {
-  // console.log(context.route.query, context.query);
-  await context.store.dispatch('users/usersRead', context)
-  await context.store.dispatch('users/usersRead', context)
-  debugger
-}
-```
-* ❕ `SSR`에서 2번 비동기 통신 완료 후, `debugger`에 걸리게 된다.
-* ❕ `Nav 메뉴`에서 router 이동 후 돌아 온다면, `CSR`쪽에서 `asyncData` 함수가 실행 된다.
+* ❕ `asyncData`, `created` 함수 모두 `SSR`에서 동작 하지만 `created`는 store.state 값을 commit으로 값을 넣을 수 없다.
+* `pages 폴더` 안에서만 `asyncData` 함수 사용 가능하고, `created`는 store commit을 사용하지 않는 `SSR`에 사용하자.
+* `Nav 메뉴`에서 router 이동 후 돌아 온다면, `CSR`쪽에서 `asyncData`, `created` 함수가 실행 된다.
 * `IE11`에서도 별도의 `Polyfill`없이 `async, await` 사용 가능 하다.
-* 결론: `created` 함수 말고 `asyncData` 함수에서 통신 하자.
 
+# Promise.all
 ```js
 async asyncData() {
   const getMyCars = myCarService.getMyCars()
