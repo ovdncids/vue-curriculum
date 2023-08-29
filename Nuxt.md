@@ -183,7 +183,7 @@ export const mutations = {
 export const actions = {
   async usersRead({ commit }, context) {
     try {
-      await context.$axios.get('http://localhost:3100/api/v1/users')
+      const response = await context.$axios.get('http://localhost:3100/api/v1/users')
       commit('usersRead', response.data.users)
     } catch (error) {}
   }
