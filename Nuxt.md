@@ -309,6 +309,32 @@ async usersCreate(_, { context, user }) {
 }
 ```
 
+### Delete
+pages/users.vue
+```vue
+<button @click="usersDelete(index)">Delete</button>
+```
+```vue
+usersDelete(index) {
+  this.$store.dispatch('usersStore/usersDelete', {
+    context: this,
+    index
+  })
+}
+```
+
+store/usersStore.js
+```js
+async usersDelete(_, { context, index }) {
+  try {
+    await context.$axios.delete('http://localhost:3100/api/v1/users/' + index)
+    context.$store.dispatch('usersStore/usersRead', context)
+  } catch (error) {
+    console.error(error)
+  }
+}
+```
+
 # Promise.all
 ```js
 async asyncData() {
