@@ -372,7 +372,7 @@ async usersUpdate({ dispatch }, { context, index, user }) {
 ```
 
 ## Search
-pages/users.vue
+pages/search.vue
 ```vue
 <template>
   <div>
