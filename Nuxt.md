@@ -262,9 +262,9 @@ export default {
       return this.$store.state.usersStore.users
     }
   },
-  async created() {
-    await this.$store.dispatch('usersStore/usersRead', this)
-  }
+  // async created() {
+  //   await this.$store.dispatch('usersStore/usersRead', this)
+  // }
 }
 </script>
 ```
