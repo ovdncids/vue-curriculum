@@ -52,7 +52,6 @@ layouts/default.vue
 </template>
 
 <script>
-import Vue from 'vue'
 import LayoutHeader from './header.vue'
 import LayoutNav from './nav.vue'
 import LayoutFooter from './footer.vue'
