@@ -307,9 +307,7 @@ async usersCreate({ dispatch }, { context, user }) {
   try {
     await context.$axios.post('http://localhost:3100/api/v1/users', user)
     dispatch('usersRead', context)
-  } catch (error) {
-    console.error(error)
-  }
+  } catch (error) {}
 }
 ```
 
@@ -333,9 +331,7 @@ async usersDelete({ dispatch }, { context, index }) {
   try {
     await context.$axios.delete('http://localhost:3100/api/v1/users/' + index)
     dispatch('usersRead', context)
-  } catch (error) {
-    console.error(error)
-  }
+  } catch (error) {}
 }
 ```
 
@@ -372,8 +368,94 @@ async usersUpdate({ dispatch }, { context, index, user }) {
   try {
     await context.$axios.patch('http://localhost:3100/api/v1/users/' + index, user)
     dispatch('usersRead', context)
-  } catch (error) {
-    console.error(error)
+  } catch (error) {}
+}
+```
+
+## Search
+pages/users.vue
+```vue
+<template>
+  <div>
+    <h3>Search</h3>
+    <hr class="d-block" />
+    <div>
+      <form>
+        <input type="text" placeholder="Search">
+        <button>Search</button>
+      </form>
+    </div>
+    <hr class="d-block" />
+    <div>
+      <table class="table-search">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Age</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(user, key) in users" :key="key">
+            <td>{{user.name}}</td>
+            <td>{{user.age}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  async asyncData(context) {
+    await context.store.dispatch('searchStore/searchRead', {
+      commit: this.$store.commit,
+      context,
+      q: ''
+    })
+  },
+  computed: {
+    users() {
+      return this.$store.state.usersStore.users
+    }
+  }
+}
+</script>
+```
+
+store/searchStore.js
+```js
+export const actions = {
+  async searchRead(_, { commit, context, q }) {
+    try {
+      const response = await context.$axios.get('http://localhost:3100/api/v1/search?q=' + q)
+      commit('usersStore/usersRead', response.data.users)
+    } catch (error) {}
+  }
+}
+```
+
+### Search Component에서만 사용 가능한 state값 적용
+pages/users.vue
+```vue
+<form @submit.prevent="searchRead()">
+  <input type="text" placeholder="Search" v-model="q" />
+  <button>Search</button>
+</form>
+```
+```vue
+data() {
+  return {
+    q: ''
+  }
+},
+methods: {
+  searchRead() {
+    this.$store.dispatch('searchStore/searchRead', {
+      commit: this.$store.commit,
+      context: this,
+      q: this.q
+    })
   }
 }
 ```
