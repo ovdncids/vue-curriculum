@@ -488,6 +488,13 @@ async asyncData(context) {
   }
 },
 ```
+```diff
+- data() {
+-   return {
+-     q: ''
+-   }
+- },
+```
 ```js
 watch: {
   '$route.query': function(query, beforeQuery) {
