@@ -479,7 +479,7 @@ async asyncData() {
   }
 }
 ```
-* ❕ `return`의 `{}` 부분이 `this(data)` 안으로 자동으로 들어가게 된다.
+* ❕ `return`의 `{}` 부분이 `this.$data` 안으로 자동으로 들어가게 된다.
 
 # Vite
 * https://vite.nuxtjs.org/getting-started/installation
