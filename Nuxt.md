@@ -171,7 +171,11 @@ input[type=text] {
 store/usersStore.js
 ```js
 export const state = () => ({
-  users: []
+  users: [],
+  user: {
+    name: '',
+    age: ''
+  }
 })
 
 export const mutations = {
@@ -282,11 +286,13 @@ pages/users.vue
 <button @click="usersCreate(user)">Create</button>
 ```
 ```vue
-data() {
-  return {
-    user: {
-      name: '',
-      age: ''
+computed: {
+  users() {
+    return this.$store.state.usersStore.users
+  },
+  user() {
+    return {
+      ...this.$store.state.usersStore.user
     }
   }
 },
