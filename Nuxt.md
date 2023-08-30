@@ -273,6 +273,7 @@ export default {
 ```
 * ❕ `asyncData`, `created` 함수 모두 `SSR`에서 동작 하지만 `created`는 async await 도중에 페이지가 그려진다.
 * ❕ `pages 폴더` 안에서만 `asyncData` 함수 사용 가능하다.
+* ❕ `pages 폴더에서는 asyncData`, `components 폴더에서는 created` 함수를 사용하자.
 * `Nav 메뉴`에서 router 이동 후 돌아 온다면, `CSR`쪽에서 `asyncData`, `created` 함수가 실행 된다.
 * `IE11`에서도 별도의 `Polyfill`없이 `async, await` 사용 가능 하다.
 
@@ -285,7 +286,7 @@ pages/users.vue
 <input type="text" placeholder="Age" v-model="user.age" />
 <button @click="usersCreate(user)">Create</button>
 ```
-```vue
+```js
 computed: {
   users() {
     return this.$store.state.usersStore.users
@@ -321,7 +322,7 @@ pages/users.vue
 ```vue
 <button @click="usersDelete(index)">Delete</button>
 ```
-```vue
+```js
 usersDelete(index) {
   this.$store.dispatch('usersStore/usersDelete', {
     context: this,
@@ -348,7 +349,7 @@ pages/users.vue
 <td>
   <button @click="usersUpdate(index, user)">Update</button>
 ```
-```vue
+```js
 computed: {
   users() {
     return [
@@ -357,7 +358,7 @@ computed: {
   }
 },
 ```
-```vue
+```js
 usersUpdate(index, user) {
   this.$store.dispatch('usersStore/usersUpdate', {
     context: this,
@@ -433,7 +434,7 @@ store/searchStore.js
 export const actions = {
   async searchRead(_, { commit, context, q }) {
     try {
-      const response = await context.$axios.get('http://localhost:3100/api/v1/search?q=' + q)
+      const response = await context.$axios.get('http://localhost:3100/api/v1/search?q=' + encodeURI(q))
       commit('usersStore/usersRead', response.data.users)
     } catch (error) {}
   }
@@ -448,7 +449,7 @@ pages/users.vue
   <button>Search</button>
 </form>
 ```
-```vue
+```js
 data() {
   return {
     q: ''
@@ -463,6 +464,42 @@ methods: {
     })
   }
 }
+```
+
+### Search Component 쿼리스트링 변경
+```js
+searchRead() {
+  this.$router.push({ path: '/search', query: { q: this.q }})
+}
+```
+`검색`, `뒤로가기` 해보기
+
+### Search Component 새로고침 적용
+```js
+async asyncData(context) {
+  const q = context.query.q || ''
+  await context.store.dispatch('searchStore/searchRead', {
+    commit: context.store.commit,
+    context,
+    q
+  })
+  return {
+    q
+  }
+},
+```
+```js
+watch: {
+  '$route.query': function(query, beforeQuery) {
+    console.log(query, beforeQuery)
+    this.q = query.q || ''
+    this.$store.dispatch('searchStore/searchRead', {
+      commit: this.$store.commit,
+      context: this,
+      q: this.q
+    })
+  }
+},
 ```
 
 # Promise.all
