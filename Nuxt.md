@@ -82,13 +82,13 @@ layouts/nav.vue
   <nav class="nav">
     <ul>
       <li>
-        <h2><nuxt-link to="/" activeClass="active">Home</nuxt-link></h2>
+        <h2><nuxt-link to="/" active-class="active">Home</nuxt-link></h2>
       </li>
       <li>
-        <h2><nuxt-link to="/users" activeClass="active">Users</nuxt-link></h2>
+        <h2><nuxt-link to="/users" active-class="active">Users</nuxt-link></h2>
       </li>
       <li>
-        <h2><nuxt-link to="/search" activeClass="active">Search</nuxt-link></h2>
+        <h2><nuxt-link to="/search" active-class="active">Search</nuxt-link></h2>
       </li>
     </ul>
   </nav>
