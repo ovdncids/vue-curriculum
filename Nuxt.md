@@ -272,7 +272,7 @@ export default {
 </script>
 ```
 * ❕ `asyncData`, `created` 함수 모두 `SSR`에서 동작 하지만 `created`는 async await 도중에 페이지가 그려진다.
-* ❕ `pages 폴더` 안에서만 `asyncData` 함수 사용 가능하다.
+* ❕ `pages 폴더` 안에서만 `asyncData` 함수 사용 가능하다. `components 폴더` 안에서는 `asyncData` 함수 사용 불가하다.
 * ❕ `pages 폴더에서는 asyncData`, `components 폴더에서는 created` 함수를 사용하자.
 * `Nav 메뉴`에서 router 이동 후 돌아 온다면, `CSR`쪽에서 `asyncData`, `created` 함수가 실행 된다.
 * `IE11`에서도 별도의 `Polyfill`없이 `async, await` 사용 가능 하다.
