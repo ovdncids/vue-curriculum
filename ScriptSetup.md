@@ -123,14 +123,13 @@ src/pages/users.vue
 ```vue
 <template>
   <form @submit.prevent="usersCreate()">
-    <input type="text" placeholder="Name" v-model="user.name" />
-    <input type="text" placeholder="Age" v-model="user.age" />
+    <input type="text" placeholder="Name" v-model="usersStore.user.name" />
+    <input type="text" placeholder="Age" v-model="usersStore.user.age" />
     <button>Create</button>
   </form>
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUsersStore } from '@/stores/usersStore'
 
@@ -139,10 +138,6 @@ const usersStore = useUsersStore()
 console.log(route.path)
 console.log(usersStore.user)
 
-const user = ref({
-  name: '',
-  age: ''
-})
 function usersCreate() {
   console.log(usersStore.usersCreate())
 }
