@@ -1,6 +1,10 @@
 # Script setup
 
 ## Vuex
+```sh
+npm install vuex
+```
+
 src/stores/index.js
 ```js
 export const usersModule = {
