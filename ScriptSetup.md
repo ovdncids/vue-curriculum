@@ -1,5 +1,74 @@
 # Script setup
 
+## Pinia
+```sh
+npm install pinia
+```
+
+src/plugins/index.js
+```js
+// Plugins
+import vuetify from './vuetify'
+import router from '@/router'
+import { createPinia } from 'pinia'
+
+// Pinia
+const pinia = createPinia()
+
+export function registerPlugins (app) {
+  app
+    .use(vuetify)
+    .use(router)
+    .use(pinia)
+}
+```
+
+src/stores/usersStore.js
+```js
+import { defineStore } from 'pinia'
+
+export const useUsersStore = defineStore('users', {
+  state: () => ({
+    users: [],
+    user: {
+      name: '',
+      age: ''
+    }
+  }),
+  actions: {
+    usersCreate() {
+      return this.user
+    }
+  }
+})
+```
+
+src/pages/users.vue
+```vue
+<template>
+  <form @submit.prevent="usersCreate()">
+    <input type="text" placeholder="Name" v-model="usersStore.user.name" />
+    <input type="text" placeholder="Age" v-model="usersStore.user.age" />
+    <button>Create</button>
+  </form>
+</template>
+
+<script setup>
+import { useRoute } from 'vue-router'
+import { useUsersStore } from '@/stores/usersStore'
+
+const route = useRoute()
+const usersStore = useUsersStore()
+console.log(route.path)
+console.log(usersStore.user)
+
+function usersCreate() {
+  console.log(usersStore.usersCreate())
+}
+</script>
+```
+* ❕ `Pinia`는 `action`에서 `return`이 가능하다.
+
 ## Vuex
 ```sh
 npm install vuex
@@ -75,72 +144,3 @@ function usersCreate() {
 }
 </script>
 ```
-
-## Pinia
-```sh
-npm install pinia
-```
-
-src/plugins/index.js
-```js
-// Plugins
-import vuetify from './vuetify'
-import router from '@/router'
-import { createPinia } from 'pinia'
-
-// Pinia
-const pinia = createPinia()
-
-export function registerPlugins (app) {
-  app
-    .use(vuetify)
-    .use(router)
-    .use(pinia)
-}
-```
-
-src/stores/usersStore.js
-```js
-import { defineStore } from 'pinia'
-
-export const useUsersStore = defineStore('users', {
-  state: () => ({
-    users: [],
-    user: {
-      name: '',
-      age: ''
-    }
-  }),
-  actions: {
-    usersCreate() {
-      return this.user
-    }
-  }
-})
-```
-
-src/pages/users.vue
-```vue
-<template>
-  <form @submit.prevent="usersCreate()">
-    <input type="text" placeholder="Name" v-model="usersStore.user.name" />
-    <input type="text" placeholder="Age" v-model="usersStore.user.age" />
-    <button>Create</button>
-  </form>
-</template>
-
-<script setup>
-import { useRoute } from 'vue-router'
-import { useUsersStore } from '@/stores/usersStore'
-
-const route = useRoute()
-const usersStore = useUsersStore()
-console.log(route.path)
-console.log(usersStore.user)
-
-function usersCreate() {
-  console.log(usersStore.usersCreate())
-}
-</script>
-```
-* ❕ `Pinia`는 `action`에서 `return`이 가능하다.
