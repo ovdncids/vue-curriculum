@@ -51,9 +51,13 @@ src/pages/users.vue
     <input type="text" placeholder="Age" v-model="usersStore.user.age" />
     <button>Create</button>
   </form>
+  {{ usersStore.$state.users }}
+  {{ usersRef }}
+  {{ usersComputed }}
 </template>
 
 <script setup>
+import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUsersStore } from '@/stores/usersStore'
 
@@ -65,6 +69,14 @@ console.log(usersStore.user)
 function usersCreate() {
   console.log(usersStore.usersCreate())
 }
+
+const usersRef = ref([])
+const usersComputed = computed(() => {
+  return usersStore.$state.users
+})
+onMounted(async function() {
+  usersRef.value = await usersStore.usersCreate()
+})
 </script>
 ```
 * ❕ `Pinia`는 `action`에서 `return`이 가능하다.
