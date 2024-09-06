@@ -66,15 +66,15 @@ const usersStore = useUsersStore()
 console.log(route.path)
 console.log(usersStore.user)
 
-function usersCreate() {
+const usersCreate = () => {
   console.log(usersStore.usersCreate())
 }
 
 const usersRef = ref([])
-const usersComputed = computed(function () {
+const usersComputed = computed(() => {
   return usersStore.$state.users
 })
-onMounted(async function() {
+onMounted(async () => {
   usersRef.value = await usersStore.usersCreate()
 })
 </script>
@@ -172,7 +172,7 @@ const user = ref({
   name: '',
   age: ''
 })
-function usersCreate() {
+const usersCreate = () => {
   console.log(this.user.name)
   console.log(this.usersCreate)
 }
