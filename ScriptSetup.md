@@ -71,7 +71,7 @@ function usersCreate() {
 }
 
 const usersRef = ref([])
-const usersComputed = computed(() => {
+const usersComputed = computed(function () {
   return usersStore.$state.users
 })
 onMounted(async function() {
@@ -80,6 +80,28 @@ onMounted(async function() {
 </script>
 ```
 * ❕ `Pinia`는 `action`에서 `return`이 가능하다.
+
+### 이전 형식과 setup이 공존할 경우
+```vue
+<template>
+  {{ users }}
+</template>
+
+<script>
+import { ref } from 'vue'
+export default {
+  setup() {
+    const users = ref([])
+    return {
+      users
+    }
+  },
+  async created() {
+    this.users = [{}]
+  }
+}
+</script>
+```
 
 ## Vuex
 ```sh
