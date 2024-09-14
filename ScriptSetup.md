@@ -57,7 +57,7 @@ src/pages/users.vue
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUsersStore } from '@/stores/usersStore'
 
@@ -74,6 +74,10 @@ const usersComputed = computed(() => {
   return usersStore.$state.users
 })
 const usersRef = ref(usersComputed.value)
+
+watch(usersComputed, (users) => {
+  usersRef.value = users
+})
 
 onMounted(async () => {
   usersRef.value = await usersStore.usersCreate()
