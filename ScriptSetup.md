@@ -70,10 +70,10 @@ const usersCreate = () => {
   console.log(usersStore.usersCreate())
 }
 
-const usersRef = ref([])
 const usersComputed = computed(() => {
   return usersStore.$state.users
 })
+const usersRef = ref(usersComputed.value)
 onMounted(async () => {
   usersRef.value = await usersStore.usersCreate()
 })
