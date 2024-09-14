@@ -57,7 +57,7 @@ src/pages/users.vue
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { computed, ref, watch, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUsersStore } from '@/stores/usersStore'
 
