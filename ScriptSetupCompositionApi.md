@@ -123,6 +123,9 @@ const props = defineProps({
 </script>
 ```
 
+### watchEffect
+* [useEffect와 비슷하고 stop도 가능](https://kyounghwan01.github.io/blog/Vue/vue3/composition-api/#watch-watcheffect-%E1%84%8C%E1%85%AE%E1%86%BC%E1%84%8C%E1%85%B5)
+
 ## Vuex
 ```sh
 npm install vuex
