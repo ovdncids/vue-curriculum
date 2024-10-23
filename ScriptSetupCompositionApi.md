@@ -1,4 +1,4 @@
-# Script setup
+# Script setup - Composition API
 
 ## Pinia
 ```sh
@@ -105,6 +105,21 @@ export default {
     this.users = [{}]
   }
 }
+</script>
+```
+
+### props
+```vue
+<script setup>
+import { defineProps } from 'vue'
+
+const props = defineProps({
+  propA: String,
+  propB: {
+    type: Number,
+    default: 0
+  }
+})
 </script>
 ```
 
