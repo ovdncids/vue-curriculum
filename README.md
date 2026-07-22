@@ -17,7 +17,7 @@ npm install -g @vue/cli
 
 # Vue.js 프로젝트 생성
 vue create vue-study
-## Normal type without Test ([Vue 2] dart-sass, babel, router, vuex, eslint) 선택
+## Normal type without Test ([Vue 3] dart-sass, babel, router, vuex, eslint) 선택
 
 cd vue-study
 code .
@@ -212,8 +212,8 @@ src/App.vue
 
 src/components/FooterComponent.vue
 ```diff
-- <FooterComponent>Copyright</FooterComponent>
-+ <FooterComponent>{{title}}</FooterComponent>
+- <footer>Copyright</footer>
++ <footer>{{title}}</footer>
 ```
 ```js
 <!-- 가장 아래에 추가 -->
