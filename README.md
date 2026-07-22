@@ -8,7 +8,9 @@ https://nodejs.org
 https://github.com/ovdncids/react-curriculum/blob/master/NVM.md
 
 ## Vue CLI
-https://kr.vuejs.org/v2/guide/index.html
+[Vue.js 2](https://kr.vuejs.org/v2/guide/index.html)
+
+[Vue.js 3](https://ko.vuejs.org)
 
 https://cli.vuejs.org/guide/installation.html
 ```sh
