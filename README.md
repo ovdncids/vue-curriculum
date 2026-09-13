@@ -14,12 +14,8 @@ https://github.com/ovdncids/react-curriculum/blob/master/NVM.md
 
 https://cli.vuejs.org/guide/installation.html
 ```sh
-# Vue CLI 설치
-npm install -g @vue/cli
-
-# Vue.js 프로젝트 생성
-vue create vue-study
-## Normal type without Test ([Vue 3] dart-sass, babel, router, vuex, eslint) 선택
+# Vue CLI 설치 및 프로젝트 생성
+npm create vue@latest
 
 cd vue-study
 code .
